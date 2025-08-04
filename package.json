@@ -1,0 +1,33 @@
+{
+    "$schema": "https://json.schemastore.org/package.json",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite"
+    },
+    "devDependencies": {
+        "@tailwindcss/vite": "^4.0.0",
+        "axios": "^1.8.2",
+        "concurrently": "^9.0.1",
+        "laravel-vite-plugin": "^2.0.0",
+        "tailwindcss": "^4.0.0",
+        "vite": "^7.0.4"
+    },
+    "dependencies": {
+        "@inertiajs/vue3": "^2.0.17",
+        "@tabler/core": "^1.4.0",
+        "@vitejs/plugin-vue": "^6.0.0",
+        "@vuepic/vue-datepicker": "^11.0.2",
+        "chart.js": "^4.5.0",
+        "chartjs-adapter-moment": "^1.0.1",
+        "dayjs": "^1.11.13",
+        "litepicker": "^2.0.12",
+        "lodash": "^4.17.21",
+        "moment": "^2.30.1",
+        "vue-chartjs": "^5.3.2",
+        "vue-currency-input": "^3.2.1",
+        "vue-datepicker": "^1.3.0",
+        "vue-number-format": "^1.3.1"
+    }
+}

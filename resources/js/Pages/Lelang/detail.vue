@@ -1,0 +1,162 @@
+<script setup>
+import { computed, reactive, ref } from "vue";
+import Layout from "../Layout/app.vue";
+import Headers from "./partials/headers.vue";
+import { router } from "@inertiajs/vue3";
+import VueNumberFormat from "vue-number-format";
+
+const props = defineProps({
+    errors: Object,
+    data: Object,
+});
+
+const statusLelang = ref(props.data.status);
+// const nominalValue = props.data.pinjam.pinjaman;
+const formData = reactive({
+    nominal: props.data.nominal,
+    status: props.data.status,
+});
+
+// const formatAmount = computed(() => {
+//     return new Intl.NumberFormat("en-US").format(formData.nominal);
+// });
+
+// function updatedAmount(event) {
+//     const rawValue = event.target.value.replace(/[^0-9.]/g, "");
+//     formData.nominal = parseFloat(rawValue) || 0;
+// }
+
+const title = "Lelang";
+const subtitle = "Item Lelang";
+
+function updateLelang() {
+    router.patch("/lelang/" + props.data.code_lelang, formData);
+}
+</script>
+
+<template>
+    <Layout>
+        <Headers :title="title" :subtitle="subtitle"></Headers>
+        <div class="page-body">
+            <div class="container-xl">
+                <form @submit.prevent="updateLelang">
+                    <div class="row row-deck row-cards">
+                        <div class="col-sm-12 col-lg-6">
+                            <!--  -->
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label class="form-label"
+                                            >Code Lelang</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            :value="props.data.code_lelang"
+                                            disabled
+                                        />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label"
+                                            >Item Lelang</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            :value="props.data.pinjam.jaminan"
+                                            disabled
+                                        />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label"
+                                            >Minimal Pembelian</label
+                                        >
+                                        <!-- <InputCurrency
+                                            v-model="props.data.pinjam.total"
+                                            :options="{ locale: 'en-US',  }"
+                                        ></InputCurrency> -->
+                                        <VueNumberFormat
+                                            v-model:value="
+                                                props.data.pinjam.total
+                                            "
+                                            :options="{
+                                                precision: 0,
+                                                prefix: 'Rp. ',
+                                                isInteger: true,
+                                            }"
+                                            class="form-control"
+                                        >
+                                        </VueNumberFormat>
+                                        <!-- <input
+                                            type="text"
+                                            class="form-control"
+                                            :value="formatAmount"
+                                            @input="updatedAmount"
+                                            disabled
+                                        /> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-6">
+                            <!--  -->
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label class="form-label"
+                                            >Nominal Lelang</label
+                                        >
+                                        <VueNumberFormat
+                                            v-model:value="formData.nominal"
+                                            :options="{
+                                                precision: 0,
+                                                prefix: 'Rp. ',
+                                                isInteger: true,
+                                            }"
+                                            class="form-control"
+                                        >
+                                        </VueNumberFormat>
+                                        <!-- <input
+                                            type="text"
+                                            class="form-control"
+                                            v-model="formData.nominal"
+                                            :disabled="
+                                                statusLelang !== 'incomplete'
+                                            "
+                                        /> -->
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Status</label>
+                                        <select
+                                            v-model="formData.status"
+                                            class="form-control"
+                                            :disabled="
+                                                statusLelang !== 'incomplete'
+                                            "
+                                        >
+                                            <option value="">Choise</option>
+                                            <option value="incomplete">
+                                                Lelang
+                                            </option>
+                                            <option value="complete">
+                                                Done
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button
+                                        type="submit"
+                                        class="btn btn-primary"
+                                    >
+                                        Submit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </Layout>
+</template>
