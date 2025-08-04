@@ -1,8 +1,8 @@
 <script setup>
-import { computed, reactive, ref } from "vue";
+import { reactive, ref } from "vue";
 import Layout from "../Layout/app.vue";
 import Headers from "./partials/headers.vue";
-import { router } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import VueNumberFormat from "vue-number-format";
 
 const props = defineProps({
@@ -10,21 +10,15 @@ const props = defineProps({
     data: Object,
 });
 
+const pages = usePage();
+
 const statusLelang = ref(props.data.status);
 // const nominalValue = props.data.pinjam.pinjaman;
 const formData = reactive({
+    _token: pages.props.csrf_token,
     nominal: props.data.nominal,
     status: props.data.status,
 });
-
-// const formatAmount = computed(() => {
-//     return new Intl.NumberFormat("en-US").format(formData.nominal);
-// });
-
-// function updatedAmount(event) {
-//     const rawValue = event.target.value.replace(/[^0-9.]/g, "");
-//     formData.nominal = parseFloat(rawValue) || 0;
-// }
 
 const title = "Lelang";
 const subtitle = "Item Lelang";

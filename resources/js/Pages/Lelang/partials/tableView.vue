@@ -1,7 +1,7 @@
 <script setup>
 import _ from "lodash";
 import { ref, watch } from "vue";
-import { router } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import Pagination from "../../../components/paginationView.vue";
 
 defineProps({
@@ -9,7 +9,7 @@ defineProps({
 });
 
 const Search = ref("");
-
+const pages = usePage();
 const emits = defineEmits(["SearchTerm"]);
 watch(
     Search,
@@ -23,7 +23,9 @@ function fcurrency(value) {
 }
 
 function SoldOut(id) {
-    router.get("/lelang/" + id);
+    router.get("/lelang/" + id, {
+        _token: pages.props.csrf_token,
+    });
 }
 </script>
 <template>

@@ -1,18 +1,19 @@
 <script setup>
 import { reactive, ref } from "vue";
-import { router } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 
 defineProps({
     errors: Object,
 });
 
 const showPass = ref(false);
-
+const page = usePage();
 function togglePass() {
     return (showPass.value = !showPass.value);
 }
 
 const formData = reactive({
+    _token: page.props.csrf_token,
     user: null,
     password: null,
 });

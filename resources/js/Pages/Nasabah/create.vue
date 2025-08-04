@@ -2,14 +2,17 @@
 import { reactive } from "vue";
 import Layout from "../Layout/app.vue";
 import Headers from "./partials/headers.vue";
-import { router } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import DatePicker from "@vuepic/vue-datepicker";
 
 defineProps({
     errors: Object,
 });
 
+const pages = usePage();
+
 const formData = reactive({
+    _token: pages.props.csrf_token,
     nik: null,
     nama: null,
     t_lahir: null,

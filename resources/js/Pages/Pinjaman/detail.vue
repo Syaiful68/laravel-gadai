@@ -4,7 +4,7 @@ import Layout from "../Layout/app.vue";
 import Headers from "./partials/headers.vue";
 import TableAngsur from "./partials/tableAngsur.vue";
 import ModalView from "./partials/modalView.vue";
-import { router } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import VueNumberFormat from "vue-number-format";
 
 const title = "Pinjaman";
@@ -16,10 +16,11 @@ const props = defineProps({
     nasabah: Object,
     angsuran: Object,
 });
-
+const pages = usePage();
 const statusPinjam = ref(props.data.status);
 
 const formData = reactive({
+    _token: pages.props.csrf_token,
     nasabahId: props.data.nasabah_id,
     nominal: props.data.pinjaman,
     date: props.data.do_date,
