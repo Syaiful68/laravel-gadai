@@ -23,9 +23,9 @@ function fcurrency(value) {
 
             <p><strong>PIHAK PERTAMA (PEMBERI PINJAMAN)</strong></p>
             <p>
-                Nama: Supri<br />
-                Nomor KTP/Identitas: 12083728167<br />
-                Alamat: jl besar balige tarutung<br />
+                Nama: SUPRI ANSYA PURBA<br />
+                Nomor KTP/Identitas: 1273011005980001<br />
+                Alamat: PARDEDE ONAN BALIGE<br />
                 (Selanjutnya disebut sebagai **PIHAK PERTAMA**)
             </p>
 
@@ -69,9 +69,8 @@ function fcurrency(value) {
                     {{ data[0].term_date }}.
                 </li>
                 <li>
-                    Pelunasan piutang dapat dilakukan secara tunai atau melalui
-                    transfer bank ke rekening PIHAK PERTAMA dengan nomor
-                    **[Nomor Rekening]**.
+                    Pelunasan piutang dapat dilakukan secara tunai kepada PIHAK
+                    PERTAMA
                 </li>
             </ol>
             <br />
@@ -113,7 +112,7 @@ function fcurrency(value) {
                 <p>PIHAK PERTAMA</p>
                 <p>(Pemberi Pinjaman)</p>
                 <div class="signature-line"></div>
-                <p class="signature-name">Supri</p>
+                <p class="signature-name">SUPRI ANSYA PURBA</p>
             </div>
             <div class="signature-block">
                 <p>PIHAK KEDUA</p>

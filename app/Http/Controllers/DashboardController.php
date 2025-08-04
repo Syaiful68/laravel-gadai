@@ -18,14 +18,25 @@ class DashboardController extends Controller
         if ($request->year === null) {
             $monthlyData = Angsuran::select(
                 DB::raw("DATE_FORMAT(do_date,'%Y-%m') as month"),
-                DB::raw("SUM(nominal) as total_comisi")
+                DB::raw("SUM(nominal) as total_angsuran")
             )->whereYear('do_date', date('Y'))->groupBy('month')->orderBy('month')->get();
+
+            $profitMonthly = Pinjaman::select(
+                DB::raw("DATE_FORMAT(updated_at,'%Y-%m') as month"),
+                DB::raw("SUM(comisi) as total_comisi")
+            )->where('status', 'complete')->whereYear('do_date', date('Y'))->groupBy('month')->orderBy('month')->get();
         } else {
             $monthlyData = Angsuran::select(
                 DB::raw("DATE_FORMAT(do_date,'%m') as month"),
-                DB::raw("SUM(nominal) as total_comisi")
+                DB::raw("SUM(nominal) as total_angsuran")
             )->whereYear('do_date', $request->year)->groupBy('month')->orderBy('month')->get();
+
+            $monthlyData = Pinjaman::select(
+                DB::raw("DATE_FORMAT(updated_at,'%m') as month"),
+                DB::raw("SUM(comisi) as total_comisi")
+            )->where('status', 'complete')->whereYear('do_date', $request->year)->groupBy('month')->orderBy('month')->get();
         }
+
 
 
         $cost_out = Pinjaman::select(DB::raw("IFNULL(SUM(pinjaman),0) as total"))->where('status', 'incomplete')->get();
@@ -33,8 +44,9 @@ class DashboardController extends Controller
         $nasabah = Nasabah::query()->where('status', 'active')->count();
         $incomplete = Pinjaman::query()->where('status', 'incomplete')->count();
 
-        return Inertia::render('DashboardView', [
-            'data' => $monthlyData->toArray(),
+        return Inertia::render('Dashboard/DashboardView', [
+            'angsuran' => $monthlyData->toArray(),
+            'profit' => $profitMonthly->toArray(),
             'cost_out' => $cost_out[0]['total'],
             'cost_in' => $cost_in[0]['total'],
             'nasabah' => $nasabah,

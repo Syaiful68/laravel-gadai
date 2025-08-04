@@ -203,7 +203,6 @@ function updatePinjaman() {
                                             :class="{
                                                 'is-invalid': errors.status,
                                             }"
-                                            disabled
                                         >
                                             <option value="">Choise</option>
                                             <option value="complete">

@@ -71,15 +71,14 @@ class LelangController extends Controller
     public function update(Request $request, string $lelang)
     {
         //
-        if ($request->status === 'incomplete') {
-            Lelang::query()->where('code_lelang', $lelang)->update([
-                'status' => $request->status,
-                'nominal' => $request->nominal,
-                'updated_at' => Carbon::now()
-            ]);
-        } else {
-            return to_route('lelang.index');
-        }
+        $query = Lelang::query()->where('code_lelang', $lelang)->first();
+        $query->update([
+            'status' => $request->status,
+            'nominal' => $request->nominal,
+            'updated_at' => Carbon::now()
+        ]);
+
+        return to_route('lelang.index');
     }
 
     /**
