@@ -203,6 +203,9 @@ function updatePinjaman() {
                                             :class="{
                                                 'is-invalid': errors.status,
                                             }"
+                                            :disabled="
+                                                statusPinjam !== 'incomplete'
+                                            "
                                         >
                                             <option value="">Choise</option>
                                             <option value="complete">
@@ -221,6 +224,7 @@ function updatePinjaman() {
                                     <button
                                         type="submit"
                                         class="btn btn-primary"
+                                        v-if="statusPinjam === 'incomplete'"
                                     >
                                         Submit
                                     </button>

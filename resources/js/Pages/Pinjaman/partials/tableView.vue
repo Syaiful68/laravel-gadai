@@ -1,7 +1,7 @@
 <script setup>
 import _ from "lodash";
 import { ref, watch } from "vue";
-import { router, Link } from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
 import Pagination from "../../../components/paginationView.vue";
 const props = defineProps({
     data: Object,
@@ -89,26 +89,30 @@ function notePinjaman(id) {
                         </td>
                         <td>
                             <a
-                                :href="'/file/' + item.code_pinjam + '/draft'"
+                                :href="
+                                    'http://api.whatsapp.com/send?phone=+62' +
+                                    item.nasabah.contact +
+                                    '&text=mohon untuk di bayarkan sejumlah uang sebesar Rp. ' +
+                                    item.pinjaman
+                                "
                                 target="_blank"
-                                rel="noopener noreferrer"
+                                class="btn btn-success btn-icon me-2"
+                            >
+                                send
+                            </a>
+                            <button
                                 type="button"
-                                class="btn btn-icon btn-success me-2"
-                                v-if="item.status !== 'lelang'"
+                                class="btn btn-icon btn-light me-2"
+                                @click="notePinjaman(item.code_pinjam)"
+                                :disabled="item.status === 'lelang'"
                             >
                                 <i class="fa-solid fa-download"></i>
-                            </a>
-                            <!-- <button
-                                @click="notePinjaman(item.code_pinjam)"
-                                type="button"
-                                class="btn btn-icon btn-success me-2"
-                                v-if="item.status !== 'lelang'"
-                            ></button> -->
+                            </button>
+
                             <button
                                 @click="editPinjaman(item.code_pinjam)"
                                 type="button"
                                 class="btn btn-icon"
-                                v-if="item.status !== 'lelang'"
                             >
                                 <i class="fa-solid fa-info"></i>
                             </button>
