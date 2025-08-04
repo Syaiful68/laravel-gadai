@@ -26,7 +26,8 @@ function editPinjaman(id) {
     router.get("/pinjaman/" + id);
 }
 function notePinjaman(id) {
-    router.get("/file/" + id + "/draft");
+    window.open("/file/" + id + "/draft", "_blank");
+    // router.get("/file/" + id + "/draft", "_blank");
 }
 </script>
 <template>
@@ -92,13 +93,15 @@ function notePinjaman(id) {
                                 :href="
                                     'http://api.whatsapp.com/send?phone=+62' +
                                     item.nasabah.contact +
-                                    '&text=mohon untuk di bayarkan sejumlah uang sebesar Rp. ' +
-                                    item.pinjaman
+                                    '&text=mohon untuk segera membayarkan uang angsuran sebesar Rp. ' +
+                                    item.pinjaman +
+                                    '%20 sebelum tanggal ' +
+                                    item.term_date
                                 "
                                 target="_blank"
                                 class="btn btn-success btn-icon me-2"
                             >
-                                send
+                                <i class="fa-brands fa-whatsapp"></i>
                             </a>
                             <button
                                 type="button"

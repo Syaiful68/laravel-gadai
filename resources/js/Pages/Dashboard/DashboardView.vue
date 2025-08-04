@@ -9,7 +9,7 @@ const props = defineProps({
     cost_out: String,
     cost_in: String,
     nasabah: Number,
-    incomplete: Number,
+    lelang: String,
 });
 
 function fcurrency(value) {
@@ -128,10 +128,10 @@ function fcurrency(value) {
                                             </div>
                                             <div class="col">
                                                 <div class="font-weight-medium">
-                                                    Belum Lunas
+                                                    Lelang
                                                 </div>
                                                 <div class="text-secondary">
-                                                    {{ incomplete }} Orang
+                                                    Rp {{ fcurrency(lelang) }}
                                                 </div>
                                             </div>
                                         </div>
@@ -140,10 +140,10 @@ function fcurrency(value) {
                             </div>
                         </div>
                     </div>
-                    <div class="col-12">
+                    <div class="col-6">
                         <AngsuranChart :data="props.angsuran"></AngsuranChart>
                     </div>
-                    <div class="col-12">
+                    <div class="col-6">
                         <profitChart :data="props.profit"></profitChart>
                     </div>
                 </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Angsuran;
+use App\Models\Lelang;
 use App\Models\Nasabah;
 use Inertia\Inertia;
 use App\Models\Pinjaman;
@@ -42,7 +43,7 @@ class DashboardController extends Controller
         $cost_out = Pinjaman::select(DB::raw("IFNULL(SUM(pinjaman),0) as total"))->where('status', 'incomplete')->get();
         $cost_in = Pinjaman::select(DB::raw("IFNULL(SUM(comisi),0) as total"))->where('status', 'complete')->get();
         $nasabah = Nasabah::query()->where('status', 'active')->count();
-        $incomplete = Pinjaman::query()->where('status', 'incomplete')->count();
+        $lelang = Lelang::select(DB::raw("IFNULL(SUM(nominal),0) as total"))->where('status', 'complete')->get();
 
         return Inertia::render('Dashboard/DashboardView', [
             'angsuran' => $monthlyData->toArray(),
@@ -50,7 +51,7 @@ class DashboardController extends Controller
             'cost_out' => $cost_out[0]['total'],
             'cost_in' => $cost_in[0]['total'],
             'nasabah' => $nasabah,
-            'incomplete' => $incomplete
+            'lelang' => $lelang[0]['total']
         ]);
     }
 }

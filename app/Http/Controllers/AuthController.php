@@ -11,6 +11,9 @@ class AuthController extends Controller
     //
     public function signin()
     {
+        if (Auth::check()) {
+            return to_route('nasabah.index');
+        }
         return Inertia::render('AuthView');
     }
     public function auth(Request $request)
