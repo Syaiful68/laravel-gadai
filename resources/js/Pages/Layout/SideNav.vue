@@ -29,8 +29,9 @@ const Menus = [
             <!-- END NAVBAR TOGGLER -->
             <!-- BEGIN NAVBAR LOGO -->
             <div class="navbar-brand navbar-brand-autodark">
-                <a href="." aria-label="Tabler"
-                    ><svg
+                <a href="." aria-label="Tabler">
+                    <!-- Selamat Jaya Gadai -->
+                    <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="110"
                         height="32"
@@ -47,8 +48,9 @@ const Menus = [
                             fill-rule="evenodd"
                             clip-rule="evenodd"
                             fill="#4a4a4a"
-                        /></svg
-                ></a>
+                        />
+                    </svg>
+                </a>
             </div>
             <!-- END NAVBAR LOGO -->
             <div class="navbar-nav flex-row d-lg-none">

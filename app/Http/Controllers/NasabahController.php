@@ -46,7 +46,7 @@ class NasabahController extends Controller
     {
         //
         $request->validate([
-            'nik' => 'required|unique:tb_nasabah,nik|min:13',
+            'nik' => 'required|unique:tb_nasabah,nik',
             'nama' => 'required',
             't_lahir' => 'required',
             'contact' => 'required|numeric',

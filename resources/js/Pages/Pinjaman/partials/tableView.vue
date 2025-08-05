@@ -27,7 +27,6 @@ function editPinjaman(id) {
 }
 function notePinjaman(id) {
     window.open("/file/" + id + "/draft", "_blank");
-    // router.get("/file/" + id + "/draft", "_blank");
 }
 </script>
 <template>

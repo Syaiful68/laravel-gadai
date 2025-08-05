@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('gender');
             $table->string('alamat');
-            $table->date('t_lahir');
+            $table->timestamp('t_lahir');
             $table->string('contact');
             $table->string('jobs');
             $table->string('status')->default('active');
