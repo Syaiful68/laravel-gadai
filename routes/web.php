@@ -21,7 +21,7 @@ route::delete('/logout', [AuthController::class, 'signout'])->middleware('auth')
 
 
 route::middleware(['auth'])->group(function () {
-    route::get('/dashboard', [DashboardController::class, 'index']);
+    route::get('/dashboard', [DashboardController::class, 'index'])->middleware('Admin');
     route::get('/report', [ReportController::class, 'index']);
     route::get('/export', [ReportController::class, 'export']);
     route::post('/angsuran', [AngsuranController::class, 'store']);
@@ -41,6 +41,6 @@ route::middleware(['auth'])->group(function () {
 
     route::resource('nasabah', NasabahController::class);
     route::resource('pinjaman', PinjamanController::class);
-    route::resource('lelang', LelangController::class);
-    route::resource('user', UserController::class);
+    route::resource('lelang', LelangController::class)->middleware('Admin');
+    route::resource('user', UserController::class)->middleware('Admin');
 });

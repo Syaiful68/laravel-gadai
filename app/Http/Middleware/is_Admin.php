@@ -23,7 +23,7 @@ class is_Admin
             if ($user === 'Admin') {
                 return $next($request);
             }
-            return abort(403, 'UnAuthorized');
+            return redirect('/nasabah');
         }
     }
 }

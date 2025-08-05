@@ -8,13 +8,50 @@ const page = usePage();
 const user = computed(() => page.props.auth.user);
 
 const Menus = [
-    { label: "Dashboard", icons: "fa-home", path: "/dashboard" },
-    { label: "Nasabah", icons: "fa-user-tie", path: "/nasabah" },
-    { label: "Pinjaman", icons: "fa-hand-holding-usd", path: "/pinjaman" },
-    { label: "Lelang", icons: "fa-sack-dollar", path: "/lelang" },
-    { label: "Report", icons: "fa-clipboard-check", path: "/report" },
-    { label: "User", icons: "fa-users", path: "/user" },
+    {
+        label: "Dashboard",
+        icons: "fa-home",
+        path: "/dashboard",
+        meta: ["Admin"],
+    },
+    {
+        label: "Nasabah",
+        icons: "fa-user-tie",
+        path: "/nasabah",
+        meta: ["Admin", "User"],
+    },
+    {
+        label: "Pinjaman",
+        icons: "fa-hand-holding-usd",
+        path: "/pinjaman",
+        meta: ["Admin", "User"],
+    },
+    {
+        label: "Lelang",
+        icons: "fa-sack-dollar",
+        path: "/lelang",
+        meta: ["Admin"],
+    },
+    {
+        label: "Report",
+        icons: "fa-clipboard-check",
+        path: "/report",
+        meta: ["Admin", "User"],
+    },
+    {
+        label: "User",
+        icons: "fa-users",
+        path: "/user",
+        meta: ["Admin"],
+    },
 ];
+
+const filterMenu = computed(() => {
+    const rolesUser = page.props.auth.user.roles;
+    return Menus.filter((menu) => {
+        return menu.meta.includes(rolesUser);
+    });
+});
 </script>
 
 <template>
@@ -78,9 +115,9 @@ const Menus = [
                         >
                         </span>
                         <div class="d-none d-xl-block ps-2">
-                            <div>Paweł Kuna</div>
+                            <div>{{ user.nama }}</div>
                             <div class="mt-1 small text-secondary">
-                                UI Designer
+                                {{ user.roles }}
                             </div>
                         </div>
                     </a>
@@ -101,7 +138,7 @@ const Menus = [
                 <!-- BEGIN NAVBAR MENU -->
                 <ul class="navbar-nav pt-lg-3">
                     <ListMenu
-                        v-for="(item, index) in Menus"
+                        v-for="(item, index) in filterMenu"
                         :key="index"
                         :label="item.label"
                         :icon="item.icons"
