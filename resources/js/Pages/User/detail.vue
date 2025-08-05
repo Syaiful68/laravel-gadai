@@ -84,11 +84,8 @@ function UpdateUser() {
                                             v-model="formData.role"
                                         >
                                             <option value="">Choise</option>
-                                            <option value="admin">Admin</option>
-                                            <option value="operator">
-                                                Operator
-                                            </option>
-                                            <option value="user">User</option>
+                                            <option value="Admin">Admin</option>
+                                            <option value="User">User</option>
                                         </select>
                                     </div>
                                 </div>

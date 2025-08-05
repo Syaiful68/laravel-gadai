@@ -86,20 +86,17 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $query = User::query()->where('user', $id)->first();
         if ($request->password !== null) {
-            $query->update([
+            User::query()->where('user', $id)->update([
                 'roles' => $request->role,
                 'password' => $request->password
             ]);
         }
-        $query->update([
+        User::query()->where('user', $id)->update([
             'roles' => $request->role
         ]);
 
-        return response()->json([
-            'msg' => 'success'
-        ], 201);
+        return to_route('user.index');
     }
 
     /**
