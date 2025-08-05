@@ -18,11 +18,15 @@ const formData = reactive({
     nama: null,
     user: null,
     password: null,
-    confirm_pass: null,
+    confirm_password: null,
 });
 
 function submitUser() {
-    router.post("/user", formData);
+    router.post("/user", formData, {
+        onSuccess: () => {
+            router.get("/user");
+        },
+    });
 }
 </script>
 
@@ -118,7 +122,7 @@ function submitUser() {
                                 <input
                                     :type="showPass ? 'text' : 'password'"
                                     class="form-control"
-                                    v-model="formData.confirm_pass"
+                                    v-model="formData.confirm_password"
                                     placeholder="Confirm password"
                                     :class="{
                                         'is-invalid': errs.confirm_password,
