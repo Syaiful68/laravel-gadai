@@ -27,6 +27,7 @@ class PinjamanController extends Controller
         } else {
             $data = Pinjaman::query()->with('nasabah');
         }
+
         return Inertia::render('Pinjaman/index', [
             'data' => $data->paginate(10),
         ]);

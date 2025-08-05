@@ -46,7 +46,7 @@ class NasabahController extends Controller
     {
         //
         $request->validate([
-            'nik' => 'required|unique:tb_nasabah,nik',
+            'nik' => 'required|unique:tb_nasabah,nik|numeric',
             'nama' => 'required',
             't_lahir' => 'required',
             'contact' => 'required|numeric',
@@ -55,10 +55,12 @@ class NasabahController extends Controller
             'gender' => 'required'
         ]);
 
+        // dd($request->all());
+
         Nasabah::create([
             'nik' => $request->nik,
             'name' => Str::upper($request->nama),
-            't_lahir' => $request->t_lahir,
+            't_lahir' => date('Y-m-d H:i:s', strtotime($request->t_lahir)),
             'contact' => $request->contact,
             'alamat' => $request->alamat,
             'jobs' => $request->job,

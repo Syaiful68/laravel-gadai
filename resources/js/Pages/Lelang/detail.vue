@@ -65,10 +65,6 @@ function updateLelang() {
                                         <label class="form-label"
                                             >Minimal Pembelian</label
                                         >
-                                        <!-- <InputCurrency
-                                            v-model="props.data.pinjam.total"
-                                            :options="{ locale: 'en-US',  }"
-                                        ></InputCurrency> -->
                                         <VueNumberFormat
                                             v-model:value="
                                                 props.data.pinjam.total
@@ -81,13 +77,6 @@ function updateLelang() {
                                             class="form-control"
                                         >
                                         </VueNumberFormat>
-                                        <!-- <input
-                                            type="text"
-                                            class="form-control"
-                                            :value="formatAmount"
-                                            @input="updatedAmount"
-                                            disabled
-                                        /> -->
                                     </div>
                                 </div>
                             </div>
@@ -110,14 +99,6 @@ function updateLelang() {
                                             class="form-control"
                                         >
                                         </VueNumberFormat>
-                                        <!-- <input
-                                            type="text"
-                                            class="form-control"
-                                            v-model="formData.nominal"
-                                            :disabled="
-                                                statusLelang !== 'incomplete'
-                                            "
-                                        /> -->
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Status</label>
@@ -142,6 +123,7 @@ function updateLelang() {
                                     <button
                                         type="submit"
                                         class="btn btn-primary"
+                                        :disabled="statusLelang === 'complete'"
                                     >
                                         Submit
                                     </button>

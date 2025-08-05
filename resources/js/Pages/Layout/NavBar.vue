@@ -5,6 +5,7 @@ import notificationModal from "../../components/notificationModal.vue";
 
 defineProps({
     notif: Array,
+    user: Object,
 });
 
 const notificationShow = ref(false);
@@ -96,9 +97,9 @@ function btnLogout() {
                         >
                         </span>
                         <div class="d-none d-xl-block ps-2">
-                            <div>Paweł Kuna</div>
+                            <div>{{ user.nama }}</div>
                             <div class="mt-1 small text-secondary">
-                                UI Designer
+                                {{ user.roles }}
                             </div>
                         </div>
                     </a>

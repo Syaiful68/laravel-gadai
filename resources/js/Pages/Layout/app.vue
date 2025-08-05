@@ -8,6 +8,7 @@ import { computed } from "vue";
 const page = usePage();
 
 const notification = computed(() => page.props.notification.upcomming);
+const user = computed(() => page.props.auth.user);
 </script>
 
 <template>
@@ -16,7 +17,7 @@ const notification = computed(() => page.props.notification.upcomming);
         <Sidebar></Sidebar>
         <!--  END SIDEBAR  -->
         <!-- BEGIN NAVBAR  -->
-        <Navbar :notif="notification"></Navbar>
+        <Navbar :notif="notification" :user="user"></Navbar>
         <!-- END NAVBAR  -->
         <div class="page-wrapper">
             <slot></slot>

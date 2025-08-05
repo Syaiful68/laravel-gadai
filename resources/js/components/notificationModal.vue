@@ -43,7 +43,7 @@ defineProps({
                             <div
                                 class="d-block text-secondary text-truncate mt-n1"
                             >
-                                {{ item.deadline }}
+                                {{ item.description }}
                             </div>
                         </div>
                         <div class="col-auto">

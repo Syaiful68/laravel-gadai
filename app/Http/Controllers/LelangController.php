@@ -71,6 +71,9 @@ class LelangController extends Controller
     public function update(Request $request, string $lelang)
     {
         //
+        if ($request->status === 'complete') {
+            return back()->with('msg', 'status sudah success');
+        }
         $query = Lelang::query()->where('code_lelang', $lelang)->first();
         $query->update([
             'status' => $request->status,

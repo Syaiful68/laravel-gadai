@@ -1,5 +1,11 @@
 <script setup>
 import ListMenu from "../../components/ListMenu.vue";
+import { usePage } from "@inertiajs/vue3";
+import { computed } from "vue";
+
+const page = usePage();
+
+const user = computed(() => page.props.auth.user);
 
 const Menus = [
     { label: "Dashboard", icons: "fa-home", path: "/dashboard" },

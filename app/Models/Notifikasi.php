@@ -9,4 +9,10 @@ class Notifikasi extends Model
     //
     protected $table = 'notification';
     protected $guarded = ['id'];
+
+
+    public function pinjaman()
+    {
+        return $this->belongsTo(Pinjaman::class);
+    }
 }

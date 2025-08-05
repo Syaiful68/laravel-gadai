@@ -1,6 +1,7 @@
 <script setup>
 import { reactive } from "vue";
 import { router } from "@inertiajs/vue3";
+import VueNumberFormat from "vue-number-format";
 const props = defineProps({
     errs: Object,
     code: String,
@@ -39,12 +40,23 @@ function submitAngsuran() {
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label">Nominal</label>
-                            <input
+                            <VueNumberFormat
+                                v-model:value="forms.nominal"
+                                :options="{
+                                    precision: 0,
+                                    prefix: 'Rp. ',
+                                    isInteger: true,
+                                }"
+                                class="form-control"
+                                :class="{ 'is-invalid': errs.nominal }"
+                            >
+                            </VueNumberFormat>
+                            <!-- <input
                                 type="text"
                                 class="form-control"
                                 v-model="forms.nominal"
                                 :class="{ 'is-invalid': errs.nominal }"
-                            />
+                            /> -->
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Tanggal Bayar</label>

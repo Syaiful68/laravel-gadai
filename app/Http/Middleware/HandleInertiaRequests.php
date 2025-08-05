@@ -37,17 +37,20 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        return [
-            ...parent::share($request),
-            'notification' => function () {
-                $fromDate = Carbon::parse(now()->addDay(-1))->format('Y-m-d');
-                $toDate = Carbon::parse(now()->addDay(6))->format('Y-m-d');
-                $upcomming = Notifikasi::query()->whereBetween('deadline', [$fromDate, $toDate])->get();
-                return [
-                    'upcomming' => $upcomming
-                ];
-            }
+        return array_merge(parent::share($request), [
+            'auth.user' => fn() => $request->user()
+                ? $request->user()->only('nama', 'user', 'roles')
+                : null,
 
-        ];
+            'notification' => function () {
+                $fromDate = Carbon::parse(now()->addDay(-4))->format('Y-m-d H:i:s');
+                $toDate = Carbon::parse(now()->addDay(4))->format('Y-m-d H:i:s');
+                $upcomming = Notifikasi::query()->where('deadline', '>=', $fromDate)->where('deadline', '<=', $toDate)->where('status', 'show')->get();
+                return [
+                    'upcomming' => $upcomming,
+
+                ];
+            },
+        ]);
     }
 }
