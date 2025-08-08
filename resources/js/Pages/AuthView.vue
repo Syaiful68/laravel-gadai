@@ -13,7 +13,7 @@ function togglePass() {
 }
 
 const formData = reactive({
-    _token: page.props.csrf_token,
+    _token: page.props.auth.csrf,
     user: null,
     password: null,
 });

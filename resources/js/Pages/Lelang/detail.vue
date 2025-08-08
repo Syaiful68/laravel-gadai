@@ -15,7 +15,7 @@ const pages = usePage();
 const statusLelang = ref(props.data.status);
 // const nominalValue = props.data.pinjam.pinjaman;
 const formData = reactive({
-    _token: pages.props.csrf_token,
+    _token: pages.props.auth.csrf,
     nominal: props.data.nominal,
     status: props.data.status,
 });

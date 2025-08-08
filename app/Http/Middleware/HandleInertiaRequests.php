@@ -38,9 +38,13 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
-            'auth.user' => fn() => $request->user()
-                ? $request->user()->only('nama', 'user', 'roles')
-                : null,
+            'auth' => [
+                'user' => fn() => $request->user()
+                    ? $request->user()->only('nama', 'user', 'roles')
+                    : null,
+                'csrf' => $request->session()->token()
+
+            ],
 
             'notification' => function () {
                 $fromDate = Carbon::parse(now()->addDay(-4))->format('Y-m-d H:i:s');

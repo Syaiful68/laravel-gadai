@@ -2,13 +2,15 @@
 import { computed, reactive, ref } from "vue";
 import Layout from "../Layout/app.vue";
 import Headers from "./partials/headers.vue";
-import { router } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import VueNumberFormat from "vue-number-format";
 
 defineProps({
     errors: Object,
     data: Object,
 });
+
+const page = usePage();
 
 const title = "Pinjaman";
 const subtitle = "New Pinjaman";
@@ -19,6 +21,7 @@ const date = ref("");
 const term = ref("");
 const jaminan = ref("");
 const persentage = ref("");
+const _token = page.props.auth.csrf;
 
 const commision = computed(() => {
     return (nominal.value * persentage.value) / 100;
@@ -27,6 +30,7 @@ const commision = computed(() => {
 function submitNasabah() {
     let formData = new FormData();
 
+    formData.append("_token", _token.value);
     formData.append("nasabah", nasabah.value);
     formData.append("pinjaman", nominal.value);
     formData.append("date", date.value);

@@ -2,14 +2,17 @@
 import { reactive } from "vue";
 import Layout from "../Layout/app.vue";
 import Headers from "./partials/headers.vue";
-import { router } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 
 const props = defineProps({
     errors: Object,
     data: Object,
 });
 
+const page = usePage();
+
 const formData = reactive({
+    _token: page.props.auth.csrf,
     nik: props.data.nik,
     nama: props.data.name,
     t_lahir: props.data.t_lahir,

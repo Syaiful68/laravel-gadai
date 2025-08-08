@@ -55,8 +55,6 @@ class NasabahController extends Controller
             'gender' => 'required'
         ]);
 
-        // dd($request->all());
-
         Nasabah::create([
             'nik' => $request->nik,
             'name' => Str::upper($request->nama),

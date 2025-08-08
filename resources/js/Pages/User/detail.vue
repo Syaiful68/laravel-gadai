@@ -1,17 +1,19 @@
 <script setup>
 import { reactive } from "vue";
-import { router } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import Layout from "../Layout/app.vue";
 import Headers from "./partials/headers.vue";
 
 const props = defineProps({
     data: Object,
 });
+const page = usePage();
 
 const title = "Users";
 const subtitle = "User Detail";
 
 const formData = reactive({
+    _token: page.props.auth.csrf,
     nik: props.data.nik,
     nama: props.data.nama,
     user: props.data.user,
