@@ -20,7 +20,7 @@ const pages = usePage();
 const statusPinjam = ref(props.data.status);
 
 const formData = reactive({
-    _token: pages.props.csrf_token,
+    _token: pages.props.auth.csrf,
     nasabahId: props.data.nasabah_id,
     nominal: props.data.pinjaman,
     date: props.data.do_date,

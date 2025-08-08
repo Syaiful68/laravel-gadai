@@ -1,5 +1,5 @@
 <script setup>
-import { computed, reactive, ref } from "vue";
+import { computed, reactive } from "vue";
 import Layout from "../Layout/app.vue";
 import Headers from "./partials/headers.vue";
 import { router, usePage } from "@inertiajs/vue3";
@@ -15,30 +15,22 @@ const page = usePage();
 const title = "Pinjaman";
 const subtitle = "New Pinjaman";
 
-const nasabah = ref("");
-const nominal = ref("");
-const date = ref("");
-const term = ref("");
-const jaminan = ref("");
-const persentage = ref("");
-const _token = page.props.auth.csrf;
-
 const commision = computed(() => {
-    return (nominal.value * persentage.value) / 100;
+    return (formData.pinjaman * formData.persentage) / 100;
+});
+
+const formData = reactive({
+    _token: page.props.auth.csrf,
+    nasabah: "",
+    pinjaman: "",
+    date: null,
+    term: null,
+    jaminan: null,
+    persentage: "",
+    comisi: commision,
 });
 
 function submitNasabah() {
-    let formData = new FormData();
-
-    formData.append("_token", _token.value);
-    formData.append("nasabah", nasabah.value);
-    formData.append("pinjaman", nominal.value);
-    formData.append("date", date.value);
-    formData.append("term", term.value);
-    formData.append("jaminan", jaminan.value);
-    formData.append("persentage", persentage.value);
-    formData.append("comisi", commision.value);
-
     router.post("/pinjaman", formData);
 }
 </script>
@@ -60,7 +52,7 @@ function submitNasabah() {
                                         >
                                         <select
                                             class="form-control"
-                                            v-model="nasabah"
+                                            v-model="formData.nasabah"
                                             :class="{
                                                 'is-invalid': errors.nasabah,
                                             }"
@@ -79,17 +71,8 @@ function submitNasabah() {
                                         <label class="form-label"
                                             >Pinjaman</label
                                         >
-                                        <!-- <input
-                                            type="text"
-                                            class="form-control"
-                                            :value="formatAmount"
-                                            @input="updatedAmount"
-                                            :class="{
-                                                'is-invalid': errors.nominal,
-                                            }"
-                                        /> -->
                                         <VueNumberFormat
-                                            v-model:value="nominal"
+                                            v-model:value="formData.pinjaman"
                                             :options="{
                                                 precision: 0,
                                                 prefix: 'Rp. ',
@@ -98,14 +81,6 @@ function submitNasabah() {
                                             class="form-control"
                                         >
                                         </VueNumberFormat>
-                                        <!-- <input
-                                            type="text"
-                                            class="form-control"
-                                            v-model="nominal"
-                                            :class="{
-                                                'is-invalid': errors.pinjaman,
-                                            }"
-                                        /> -->
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label"
@@ -114,7 +89,7 @@ function submitNasabah() {
                                         <input
                                             type="date"
                                             class="form-control"
-                                            v-model="date"
+                                            v-model="formData.date"
                                             :class="{
                                                 'is-invalid': errors.date,
                                             }"
@@ -125,7 +100,7 @@ function submitNasabah() {
                                         <input
                                             type="text"
                                             class="form-control"
-                                            v-model="term"
+                                            v-model="formData.term"
                                             :class="{
                                                 'is-invalid': errors.term,
                                             }"
@@ -145,7 +120,7 @@ function submitNasabah() {
                                         <input
                                             type="text"
                                             class="form-control"
-                                            v-model="jaminan"
+                                            v-model="formData.jaminan"
                                             :class="{
                                                 'is-invalid': errors.jaminan,
                                             }"
@@ -154,7 +129,7 @@ function submitNasabah() {
                                     <div class="mb-3">
                                         <label class="form-label">Komisi</label>
                                         <VueNumberFormat
-                                            v-model:value="persentage"
+                                            v-model:value="formData.persentage"
                                             :options="{
                                                 precision: 0,
                                                 prefix: '',
@@ -164,14 +139,6 @@ function submitNasabah() {
                                             class="form-control"
                                         >
                                         </VueNumberFormat>
-                                        <!-- <input
-                                            type="text"
-                                            class="form-control"
-                                            v-model="persentage"
-                                            :class="{
-                                                'is-invalid': errors.persentage,
-                                            }"
-                                        /> -->
                                     </div>
                                 </div>
                                 <div class="card-footer">

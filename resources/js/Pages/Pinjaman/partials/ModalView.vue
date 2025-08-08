@@ -1,6 +1,6 @@
 <script setup>
 import { reactive } from "vue";
-import { router } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import VueNumberFormat from "vue-number-format";
 const props = defineProps({
     errs: Object,
@@ -8,7 +8,10 @@ const props = defineProps({
 });
 //
 
+const page = usePage();
+
 const forms = reactive({
+    _token: page.props.auth.csrf,
     code_pinjam: props.code,
     nominal: null,
     date: null,
