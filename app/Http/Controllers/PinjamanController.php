@@ -127,18 +127,14 @@ class PinjamanController extends Controller
     {
         //
         $query = Pinjaman::query()->where('code_pinjam', $pinjaman)->first();
-
-        // $status = $request->status;
-        // if ($status === 'lelang') {
         $query->update([
-            // 'term_date' => $request->last_date,
             'status' => $request->status
         ]);
-        $lelang = Lelang::query()->first();
+        $lelang = Lelang::query()->latest()->first();
         if ($lelang === null) {
             $last_code = 1;
         } else {
-            $last_code = $query->id + 1;
+            $last_code = Lelang::count() + 1;
         }
         $h = "LMA";
         $code = $h . str_pad($last_code, 6, 0, STR_PAD_LEFT);
@@ -148,11 +144,6 @@ class PinjamanController extends Controller
             'user_id' => Auth::id()
         ]);
         return to_route('pinjaman.index');
-        // }
-        // $query->update([
-        //     'status' => $request->status
-        // ]);
-        // return to_route('pinjaman.index');
     }
     /**
      * Remove the specified resource from storage.

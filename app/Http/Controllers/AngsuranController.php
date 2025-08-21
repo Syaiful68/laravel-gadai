@@ -22,7 +22,16 @@ class AngsuranController extends Controller
         $hitung = Angsuran::query()->where('pinjaman_id', $pinjam->id)->latest()->first();
         if ($hitung !== null) {
             $sisa = $hitung->sisa_bayar - intval($request->nominal);
-            if ($sisa === 0) {
+            if ($sisa !== 0) {
+                Angsuran::create([
+                    'pinjaman_id' => $pinjam->id,
+                    'nominal' => $request->nominal,
+                    'do_date' => $request->date,
+                    'sisa_bayar' => $sisa,
+                    'payment_type' => $request->payment_type,
+                    'user_id' => Auth::id()
+                ]);
+            } else {
                 Angsuran::create([
                     'pinjaman_id' => $pinjam->id,
                     'nominal' => $request->nominal,
@@ -33,21 +42,21 @@ class AngsuranController extends Controller
                 ]);
                 Pinjaman::query()->where('id', $pinjam->id)->update([
                     'status' => 'complete'
-                ]);
-            } else {
-                Angsuran::create([
-                    'pinjaman_id' => $pinjam->id,
-                    'nominal' => $request->nominal,
-                    'do_date' => $request->date,
-                    'sisa_bayar' => $sisa,
-                    'payment_type' => $request->payment_type,
-                    'user_id' => Auth::id()
                 ]);
             }
         } else {
             $sisa = $pinjam->total - intval($request->nominal);
             // dd($hitung->id);
-            if ($sisa === 0) {
+            if ($sisa !== 0) {
+                Angsuran::create([
+                    'pinjaman_id' => $pinjam->id,
+                    'nominal' => $request->nominal,
+                    'do_date' => $request->date,
+                    'sisa_bayar' => $sisa,
+                    'payment_type' => $request->payment_type,
+                    'user_id' => Auth::id()
+                ]);
+            } else {
                 Angsuran::create([
                     'pinjaman_id' => $pinjam->id,
                     'nominal' => $request->nominal,
@@ -58,15 +67,6 @@ class AngsuranController extends Controller
                 ]);
                 Pinjaman::query()->where('id', $pinjam->id)->update([
                     'status' => 'complete'
-                ]);
-            } else {
-                Angsuran::create([
-                    'pinjaman_id' => $pinjam->id,
-                    'nominal' => $request->nominal,
-                    'do_date' => $request->date,
-                    'sisa_bayar' => $sisa,
-                    'payment_type' => $request->payment_type,
-                    'user_id' => Auth::id()
                 ]);
             }
         }
