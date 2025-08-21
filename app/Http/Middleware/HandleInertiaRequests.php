@@ -45,8 +45,11 @@ class HandleInertiaRequests extends Middleware
                 'csrf' => $request->session()->token()
 
             ],
-
-            'notification' => function () {
+            'flash' => [
+                'message' => fn() => $request->session()->get('message')
+            ],
+            'notification' =>
+            function () {
                 $fromDate = Carbon::parse(now()->addDay(-4))->format('Y-m-d H:i:s');
                 $toDate = Carbon::parse(now()->addDay(4))->format('Y-m-d H:i:s');
                 $upcomming = Notifikasi::query()->where('deadline', '>=', $fromDate)->where('deadline', '<=', $toDate)->where('status', 'show')->get();
@@ -55,6 +58,7 @@ class HandleInertiaRequests extends Middleware
 
                 ];
             },
+
         ]);
     }
 }

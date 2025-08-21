@@ -81,20 +81,6 @@ function updatePinjaman() {
                                         <label class="form-label"
                                             >Pinjaman</label
                                         >
-                                        <!-- <input
-                                            type="text"
-                                            class="form-control"
-                                            :value="formatAmount"
-                                            @input="
-                                                updatedAmount(
-                                                    props.data.pinjaman
-                                                )
-                                            "
-                                            :class="{
-                                                'is-invalid': errors.pinjaman,
-                                            }"
-                                            disabled
-                                        /> -->
                                         <VueNumberFormat
                                             v-model:value="formData.nominal"
                                             :options="{

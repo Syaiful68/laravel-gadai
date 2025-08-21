@@ -22,6 +22,9 @@ class AngsuranController extends Controller
         $hitung = Angsuran::query()->where('pinjaman_id', $pinjam->id)->latest()->first();
         if ($hitung !== null) {
             $sisa = $hitung->sisa_bayar - intval($request->nominal);
+            if ($sisa < 0) {
+                return back()->with('message', 'Angka terlalu besar');
+            }
             if ($sisa !== 0) {
                 Angsuran::create([
                     'pinjaman_id' => $pinjam->id,
@@ -43,10 +46,13 @@ class AngsuranController extends Controller
                 Pinjaman::query()->where('id', $pinjam->id)->update([
                     'status' => 'complete'
                 ]);
+                return redirect()->to('/pinjaman');
             }
         } else {
             $sisa = $pinjam->total - intval($request->nominal);
-            // dd($hitung->id);
+            if ($sisa < 0) {
+                return back()->with('message', 'Angka terlalu besar');
+            }
             if ($sisa !== 0) {
                 Angsuran::create([
                     'pinjaman_id' => $pinjam->id,
@@ -68,6 +74,7 @@ class AngsuranController extends Controller
                 Pinjaman::query()->where('id', $pinjam->id)->update([
                     'status' => 'complete'
                 ]);
+                return redirect()->to('/pinjaman');
             }
         }
     }

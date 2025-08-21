@@ -52,6 +52,7 @@ function SoldOut(id) {
                 <thead>
                     <tr>
                         <th>Code Lelang</th>
+                        <th>Code Pinjaman</th>
                         <th>Nama Lelang</th>
                         <th>Nominal Pinjaman</th>
                         <th>Status</th>
@@ -64,6 +65,7 @@ function SoldOut(id) {
                     </tr>
                     <tr v-for="(item, index) in data.data" :key="index">
                         <td>{{ item.code_lelang }}</td>
+                        <td>{{ item.pinjam.code_pinjam }}</td>
                         <td>{{ item.pinjam.jaminan }}</td>
                         <td>Rp. {{ fcurrency(item.pinjam.pinjaman) }}</td>
                         <td>

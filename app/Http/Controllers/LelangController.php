@@ -25,7 +25,7 @@ class LelangController extends Controller
         }
         // $data = Lelang::query()->with('pinjam')->paginate();
         return Inertia::render('Lelang/index', [
-            'data' => $data->paginate(10)
+            'data' => $data->latest()->paginate(10)
         ]);
     }
 

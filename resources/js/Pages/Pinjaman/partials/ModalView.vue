@@ -54,12 +54,6 @@ function submitAngsuran() {
                                 :class="{ 'is-invalid': errs.nominal }"
                             >
                             </VueNumberFormat>
-                            <!-- <input
-                                type="text"
-                                class="form-control"
-                                v-model="forms.nominal"
-                                :class="{ 'is-invalid': errs.nominal }"
-                            /> -->
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Tanggal Bayar</label>
