@@ -194,7 +194,12 @@ function updatePinjaman() {
                                             "
                                         >
                                             <option value="">Choise</option>
-                                            <option value="complete">
+                                            <option
+                                                value="complete"
+                                                v-if="
+                                                    statusPinjam === 'complete'
+                                                "
+                                            >
                                                 Complete
                                             </option>
                                             <option value="incomplete">

@@ -74,12 +74,12 @@ function notePinjaman(id) {
                             <span
                                 v-if="item.status === 'complete'"
                                 class="badge bg-green text-green-fg"
-                                >Complete</span
+                                >Lunas</span
                             >
                             <span
                                 v-if="item.status === 'incomplete'"
                                 class="badge bg-orange text-orange-fg"
-                                >In Complete</span
+                                >Angsur</span
                             >
                             <span
                                 v-if="item.status === 'lelang'"
