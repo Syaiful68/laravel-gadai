@@ -2,11 +2,16 @@
 import Layout from "../Layout/app.vue";
 import Headers from "./partials/headers.vue";
 import TableView from "./partials/tableView.vue";
-import { router } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
+import { computed } from "vue";
 
 const props = defineProps({
     data: Object,
 });
+
+const page = usePage();
+const flash = computed(() => page.props.flash.msg);
+
 const title = "Pinjaman";
 const subtitle = "Pinjaman";
 

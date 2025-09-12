@@ -61,13 +61,18 @@ class PinjamanController extends Controller
             'jaminan' => 'required'
         ]);
 
-        $query = Pinjaman::count();
-        if ($query === 0) {
-            $n = 1;
-        } else {
-            $n = Pinjaman::count() + 1;
+        $nasabah = Pinjaman::query()->where('nasabah_id', $request->nasabah)->where('status', 'incomplete')->latest()->first();
+
+        if ($nasabah !== null) {
+            return redirect()->to('/pinjaman')->with('msg', 'Pinjaman masih ada');
         }
 
+        $query = Pinjaman::query()->latest()->first();
+        if ($query === null) {
+            $n = 1;
+        } else {
+            $n = $query->id + 1;
+        }
         $h = 'PGH';
         $code = $h . str_pad($n, 6, 0, STR_PAD_LEFT);
         $total = $request->comisi + $request->pinjaman;
@@ -127,20 +132,31 @@ class PinjamanController extends Controller
     {
         //
         $query = Pinjaman::query()->where('code_pinjam', $pinjaman)->first();
-        $query->update([
-            'status' => $request->status
-        ]);
-        $lelang = Lelang::query()->latest()->first();
-        if ($lelang === null) {
-            $last_code = 1;
-        } else {
-            $last_code = Lelang::count() + 1;
+
+        if ($request->status === 'lelang') {
+            $lelang = Lelang::query()->latest()->first();
+            if ($lelang === null) {
+                $last_code = 1;
+            } else {
+                $last_code = Lelang::count() + 1;
+            }
+            $h = "LMA";
+            $code = $h . str_pad($last_code, 6, 0, STR_PAD_LEFT);
+            Lelang::create([
+                'code_lelang' => $code,
+                'pinjam_id' => $query->id,
+                'user_id' => Auth::id()
+            ]);
+
+            $query = Notifikasi::query()->where('name', $pinjaman)->first();
+            $query->update([
+                'status' => 'hide'
+            ]);
+            return to_route('pinjaman.index');
+            // 
         }
-        $h = "LMA";
-        $code = $h . str_pad($last_code, 6, 0, STR_PAD_LEFT);
-        Lelang::create([
-            'code_lelang' => $code,
-            'pinjam_id' => $query->id,
+        $query->update([
+            'term_date' => $request->last_date,
             'user_id' => Auth::id()
         ]);
         return to_route('pinjaman.index');

@@ -17,6 +17,7 @@ const props = defineProps({
     angsuran: Object,
 });
 const pages = usePage();
+
 const statusPinjam = ref(props.data.status);
 
 const formData = reactive({
@@ -24,7 +25,7 @@ const formData = reactive({
     nasabahId: props.data.nasabah_id,
     nominal: props.data.pinjaman,
     date: props.data.do_date,
-    last_date: "",
+    last_date: props.data.term_date,
     term: props.data.term,
     total: props.data.total,
     status: props.data.status,
@@ -107,7 +108,7 @@ function updatePinjaman() {
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label"
-                                            >Perpanjang</label
+                                            >Tanggal Tenor</label
                                         >
                                         <input
                                             type="date"

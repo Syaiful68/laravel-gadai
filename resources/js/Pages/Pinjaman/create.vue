@@ -4,6 +4,7 @@ import Layout from "../Layout/app.vue";
 import Headers from "./partials/headers.vue";
 import { router, usePage } from "@inertiajs/vue3";
 import VueNumberFormat from "vue-number-format";
+import Swal from "sweetalert2";
 
 defineProps({
     errors: Object,
@@ -11,6 +12,7 @@ defineProps({
 });
 
 const page = usePage();
+const flash = computed(() => page.props.flash.msg);
 
 const title = "Pinjaman";
 const subtitle = "New Pinjaman";
@@ -30,8 +32,21 @@ const formData = reactive({
     comisi: commision,
 });
 
-function submitNasabah() {
-    router.post("/pinjaman", formData);
+function submitPinjaman() {
+    router.post("/pinjaman", formData, {
+        onSuccess: () => {
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Pinjaman Has been created",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        },
+        onError: () => {
+            console.log(errors);
+        },
+    });
 }
 </script>
 
@@ -40,7 +55,7 @@ function submitNasabah() {
         <Headers :title="title" :subtitle="subtitle"></Headers>
         <div class="page-body">
             <div class="container-xl">
-                <form @submit.prevent="submitNasabah">
+                <form @submit.prevent="submitPinjaman">
                     <div class="row row-deck row-cards">
                         <div class="col-sm-12 col-lg-6">
                             <!--  -->
