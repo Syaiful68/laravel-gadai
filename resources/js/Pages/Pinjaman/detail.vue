@@ -132,7 +132,7 @@ function updatePinjaman() {
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label"
-                                            >Tanggal Tenor</label
+                                            >Tanggal Jatuh Tempo</label
                                         >
                                         <input
                                             type="date"
