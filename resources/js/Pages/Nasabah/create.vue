@@ -1,8 +1,8 @@
 <script setup>
 import { reactive } from "vue";
 import Layout from "../Layout/app.vue";
-import Headers from "./partials/headers.vue";
-import { router, usePage } from "@inertiajs/vue3";
+import HeadersCard from "../../components/HeadersCard.vue";
+import { router, usePage, Link } from "@inertiajs/vue3";
 import DatePicker from "@vuepic/vue-datepicker";
 
 defineProps({
@@ -31,7 +31,17 @@ function submitNasabah() {
 
 <template>
     <Layout>
-        <Headers :title="title" :subtitle="subtitle"></Headers>
+        <HeadersCard>
+            <template #title-pre>
+                <div class="page-pretitle">{{ title }}</div>
+                <h2 class="page-title">{{ subtitle }}</h2>
+            </template>
+            <template #link-button>
+                <span class="d-none d-sm-inline">
+                    <Link href="/nasabah" class="btn btn-1"> Back </Link>
+                </span>
+            </template>
+        </HeadersCard>
         <div class="page-body">
             <div class="container-xl">
                 <form @submit.prevent="submitNasabah">

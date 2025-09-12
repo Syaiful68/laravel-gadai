@@ -1,10 +1,10 @@
 <script setup>
 import { reactive, ref } from "vue";
 import Layout from "../Layout/app.vue";
-import Headers from "./partials/headers.vue";
+import HeadersCard from "../../components/HeadersCard.vue";
 import TableAngsur from "./partials/tableAngsur.vue";
 import ModalView from "./partials/modalView.vue";
-import { router, usePage } from "@inertiajs/vue3";
+import { router, usePage, Link } from "@inertiajs/vue3";
 import VueNumberFormat from "vue-number-format";
 
 const title = "Pinjaman";
@@ -61,7 +61,17 @@ function updatePinjaman() {
 
 <template>
     <Layout>
-        <Headers :title="title" :subtitle="subtitle"></Headers>
+        <HeadersCard>
+            <template #title-pre>
+                <div class="page-pretitle">{{ title }}</div>
+                <h2 class="page-title">{{ subtitle }}</h2>
+            </template>
+            <template #link-button>
+                <span class="d-none d-sm-inline">
+                    <Link href="/pinjaman" class="btn btn-1"> Back </Link>
+                </span>
+            </template>
+        </HeadersCard>
         <div class="page-body">
             <div class="container-xl">
                 <form @submit.prevent="updatePinjaman">

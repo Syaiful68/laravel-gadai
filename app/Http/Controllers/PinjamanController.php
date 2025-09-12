@@ -64,7 +64,7 @@ class PinjamanController extends Controller
         $nasabah = Pinjaman::query()->where('nasabah_id', $request->nasabah)->where('status', 'incomplete')->latest()->first();
 
         if ($nasabah !== null) {
-            return redirect()->to('/pinjaman')->with('msg', 'Pinjaman masih ada');
+            return back()->with('failed', 'masih ada pinjaman');
         }
 
         $query = Pinjaman::query()->latest()->first();
