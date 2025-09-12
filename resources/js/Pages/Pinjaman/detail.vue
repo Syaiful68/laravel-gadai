@@ -41,7 +41,21 @@ function toggleModal() {
 }
 
 function updatePinjaman() {
-    router.put("/pinjaman/" + props.data.code_pinjam, formData);
+    router.put("/pinjaman/" + props.data.code_pinjam, formData, {
+        onSuccess: () => {
+            Swal.fire({
+                position: "top-end",
+                toast: true,
+                icon: "success",
+                title: "Pinjaman Has been Updated",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        },
+        onError: () => {
+            console.log(errors);
+        },
+    });
 }
 </script>
 

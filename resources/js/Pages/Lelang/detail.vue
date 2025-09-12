@@ -24,7 +24,21 @@ const title = "Lelang";
 const subtitle = "Item Lelang";
 
 function updateLelang() {
-    router.patch("/lelang/" + props.data.code_lelang, formData);
+    router.patch("/lelang/" + props.data.code_lelang, formData, {
+        onSuccess: () => {
+            Swal.fire({
+                position: "top-end",
+                toast: true,
+                icon: "success",
+                title: "Lelang Has been Updated",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        },
+        onError: () => {
+            console.log(errors);
+        },
+    });
 }
 </script>
 

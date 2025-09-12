@@ -37,6 +37,7 @@ function submitPinjaman() {
         onSuccess: () => {
             Swal.fire({
                 position: "top-end",
+                toast: true,
                 icon: "success",
                 title: "Pinjaman Has been created",
                 showConfirmButton: false,

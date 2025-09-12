@@ -148,7 +148,7 @@ class PinjamanController extends Controller
                 'user_id' => Auth::id()
             ]);
 
-            $query = Notifikasi::query()->where('name', $pinjaman)->first();
+            $query = Notifikasi::query()->where('name', $pinjaman)->latest()->first();
             $query->update([
                 'status' => 'hide'
             ]);
