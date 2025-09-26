@@ -13,7 +13,7 @@ use App\Http\Controllers\AngsuranController;
 use App\Http\Controllers\PinjamanController;
 use App\Http\Controllers\DashboardController;
 
-route::get('/', [AuthController::class, 'signin'])->name('login');
+route::get('/', [AuthController::class, 'signin'])->name('login')->middleware('throttle:login');;
 route::post('/auth', [AuthController::class, 'auth']);
 route::delete('/logout', [AuthController::class, 'signout'])->middleware('auth');
 

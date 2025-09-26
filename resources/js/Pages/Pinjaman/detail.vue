@@ -6,6 +6,7 @@ import TableAngsur from "./partials/tableAngsur.vue";
 import ModalView from "./partials/modalView.vue";
 import { router, usePage, Link } from "@inertiajs/vue3";
 import VueNumberFormat from "vue-number-format";
+import Swal from "sweetalert2";
 
 const title = "Pinjaman";
 const subtitle = "Detail Pinjaman";
@@ -79,6 +80,9 @@ function updatePinjaman() {
                         <div class="col-sm-12 col-lg-6">
                             <!--  -->
                             <div class="card">
+                                <div class="card-header">
+                                    <h4>{{ props.data.code_pinjam }}</h4>
+                                </div>
                                 <div class="card-body">
                                     <div class="mb-3">
                                         <label class="form-label"
@@ -142,7 +146,7 @@ function updatePinjaman() {
                                                 'is-invalid': errors.date,
                                             }"
                                             :disabled="
-                                                statusPinjam === 'complete'
+                                                statusPinjam !== 'incomplete'
                                             "
                                         />
                                     </div>

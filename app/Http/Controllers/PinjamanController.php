@@ -134,6 +134,9 @@ class PinjamanController extends Controller
         $query = Pinjaman::query()->where('code_pinjam', $pinjaman)->first();
 
         if ($request->status === 'lelang') {
+            $query->update([
+                'status' => $request->status
+            ]);
             $lelang = Lelang::query()->latest()->first();
             if ($lelang === null) {
                 $last_code = 1;
