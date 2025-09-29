@@ -61,11 +61,11 @@ class PinjamanController extends Controller
             'jaminan' => 'required'
         ]);
 
-        $nasabah = Pinjaman::query()->where('nasabah_id', $request->nasabah)->where('status', 'incomplete')->latest()->first();
+        // $nasabah = Pinjaman::query()->where('nasabah_id', $request->nasabah)->where('status', 'incomplete')->latest()->first();
 
-        if ($nasabah !== null) {
-            return back()->with('failed', 'masih ada pinjaman');
-        }
+        // if ($nasabah !== null) {
+        //     return back()->with('failed', 'masih ada pinjaman');
+        // }
 
         $query = Pinjaman::query()->latest()->first();
         if ($query === null) {
