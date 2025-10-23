@@ -1,5 +1,5 @@
 <script setup>
-defineProps({
+const props = defineProps({
     data: Object,
 });
 </script>
@@ -7,13 +7,11 @@ defineProps({
 <template>
     <div class="col-auto">
         <ul class="pagination m-0 ms-auto">
-            <li
-                class="page-item"
-                :class="{ active: item.active === true }"
-                v-for="(item, index) in data"
-                :key="index"
-            >
-                <a class="page-link" :href="item.url" v-html="item.label"></a>
+            <li class="page-item">
+                <a class="page-link" :href="props.data.prev_page_url">< Prev</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" :href="props.data.next_page_url">Next ></a>
             </li>
         </ul>
     </div>

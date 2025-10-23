@@ -191,7 +191,7 @@ function exportData() {
                                             >
                                         </p>
                                     </div>
-                                    <Pagination :data="data.links"></Pagination>
+                                    <Pagination :data="data"></Pagination>
                                 </div>
                             </template>
                         </TableView>

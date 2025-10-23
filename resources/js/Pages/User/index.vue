@@ -47,7 +47,7 @@ function EditUser(id) {
                 <!--  -->
                 <div class="btn-list">
                     <button
-                        @click="$emit('toggle')"
+                        @click="toggleModal"
                         type="button"
                         class="btn btn-primary"
                     >
