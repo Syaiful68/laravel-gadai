@@ -142,6 +142,10 @@ function deLelang(id) {
                                                     "
                                                     type="button"
                                                     class="btn btn-icon"
+                                                    :disabled="
+                                                        item.status ===
+                                                        'complete'
+                                                    "
                                                 >
                                                     <i
                                                         class="fa-solid fa-trash"
