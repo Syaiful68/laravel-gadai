@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tb_lelang', function (Blueprint $table) {
             $table->id();
             $table->string('code_lelang');
-            $table->string('pinjam_id');
+            $table->unsignedBigInteger('pinjam_id');
             $table->integer('nominal')->nullable();
             $table->string('status')->default('incomplete');
             $table->string('user_id');

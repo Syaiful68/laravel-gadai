@@ -157,18 +157,26 @@ class PinjamanController extends Controller
             ]);
             return to_route('pinjaman.index');
             // 
+        } else {
+            $query->update([
+                'term_date' => $request->last_date,
+                'status' => $request->status,
+                'user_id' => Auth::id()
+            ]);
+            return to_route('pinjaman.index');
         }
-        $query->update([
-            'term_date' => $request->last_date,
-            'user_id' => Auth::id()
-        ]);
-        return to_route('pinjaman.index');
     }
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pinjaman $pinjaman)
+    public function destroy(string $pinjaman)
     {
         //
+        $query = Pinjaman::query()->where('code_pinjam', $pinjaman)->first();
+        if ($query === null) {
+            return 'Data not found';
+        } else {
+            $query->delete();
+        }
     }
 }

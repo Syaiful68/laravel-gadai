@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('nik');
             $table->string('name');
             $table->string('gender');
-            $table->string('alamat');
+            $table->text('alamat');
             $table->string('t_lahir');
             $table->string('contact');
             $table->string('jobs');

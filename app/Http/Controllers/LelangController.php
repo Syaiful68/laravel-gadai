@@ -15,7 +15,6 @@ class LelangController extends Controller
     public function index(Request $request)
     {
         //
-
         if ($request->q) {
             $data = Lelang::query()->with('pinjam')->whereAny([
                 'code_lelang'
@@ -71,9 +70,9 @@ class LelangController extends Controller
     public function update(Request $request, string $lelang)
     {
         //
-        if ($request->status === 'complete') {
-            return back()->with('msg', 'status sudah success');
-        }
+        // if ($request->status === 'complete') {
+        //     return back()->with('msg', 'status sudah success');
+        // }
         $query = Lelang::query()->where('code_lelang', $lelang)->first();
         $query->update([
             'status' => $request->status,
@@ -87,8 +86,10 @@ class LelangController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Lelang $lelang)
+    public function destroy(string $lelang)
     {
         //
+        $query = Lelang::query()->where('code_lelang', $lelang)->first();
+        $query->delete();
     }
 }

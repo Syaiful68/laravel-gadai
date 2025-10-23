@@ -1,4 +1,5 @@
 <script setup>
+import TableView from "../../../components/TableView.vue";
 const props = defineProps({
     angsuran: Object,
 });
@@ -8,8 +9,8 @@ function fcurrency(value) {
 }
 </script>
 <template>
-    <div class="card">
-        <div class="card-body border-bottom py-3">
+    <TableView>
+        <template #headers>
             <div class="d-flex">
                 <h4 class="title-table">List Angsuran</h4>
                 <div class="ms-auto">
@@ -23,8 +24,8 @@ function fcurrency(value) {
                     </button>
                 </div>
             </div>
-        </div>
-        <div class="table-responsive">
+        </template>
+        <template #body>
             <table
                 class="table table-selectable card-table table-vcenter text-nowrap datatable"
             >
@@ -47,6 +48,6 @@ function fcurrency(value) {
                     </tr>
                 </tbody>
             </table>
-        </div>
-    </div>
+        </template>
+    </TableView>
 </template>

@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('tb_angsurans', function (Blueprint $table) {
             $table->id();
-            $table->string('pinjaman_id');
+            $table->unsignedBigInteger('pinjaman_id');
             $table->integer('nominal');
             $table->integer('sisa_bayar');
             $table->date('do_date');
             $table->string('payment_type');
-            $table->string('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });
     }

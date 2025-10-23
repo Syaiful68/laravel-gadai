@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tb_pinjaman', function (Blueprint $table) {
             $table->id();
             $table->string('code_pinjam');
-            $table->bigInteger('nasabah_id');
+            $table->unsignedBigInteger('nasabah_id');
             $table->string('jaminan');
             $table->integer('pinjaman');
             $table->string('term');
@@ -23,7 +23,7 @@ return new class extends Migration
             $table->integer('total');
             $table->date('term_date');
             $table->date('do_date');
-            $table->string('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('status')->default('incomplete');
             $table->timestamps();
         });

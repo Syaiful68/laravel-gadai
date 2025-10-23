@@ -4,7 +4,7 @@ import Layout from "../Layout/app.vue";
 import Headers from "./partials/headers.vue";
 import { router, usePage } from "@inertiajs/vue3";
 import VueNumberFormat from "vue-number-format";
-
+import Swal from "sweetalert2";
 const props = defineProps({
     errors: Object,
     data: Object,

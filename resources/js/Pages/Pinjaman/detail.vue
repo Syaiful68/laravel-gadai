@@ -2,7 +2,7 @@
 import { reactive, ref } from "vue";
 import Layout from "../Layout/app.vue";
 import HeadersCard from "../../components/HeadersCard.vue";
-import TableAngsur from "./partials/tableAngsur.vue";
+import TableView from "../../components/TableView.vue";
 import ModalView from "./partials/modalView.vue";
 import { router, usePage, Link } from "@inertiajs/vue3";
 import VueNumberFormat from "vue-number-format";
@@ -36,6 +36,10 @@ const formData = reactive({
 });
 
 const showModal = ref(false);
+
+function fcurrency(value) {
+    return new Intl.NumberFormat().format(value);
+}
 
 function toggleModal() {
     return (showModal.value = !showModal.value);
@@ -218,9 +222,6 @@ function updatePinjaman() {
                                             :class="{
                                                 'is-invalid': errors.status,
                                             }"
-                                            :disabled="
-                                                statusPinjam !== 'incomplete'
-                                            "
                                         >
                                             <option value="">Choise</option>
                                             <option
@@ -244,7 +245,9 @@ function updatePinjaman() {
                                     <button
                                         type="submit"
                                         class="btn btn-primary"
-                                        v-if="statusPinjam === 'incomplete'"
+                                        :disabled="
+                                            props.data.status === 'complete'
+                                        "
                                     >
                                         Submit
                                     </button>
@@ -254,10 +257,57 @@ function updatePinjaman() {
                     </div>
                 </form>
                 <div class="col-12 mt-3">
-                    <TableAngsur
-                        :angsuran="angsuran"
-                        @onToggle="toggleModal"
-                    ></TableAngsur>
+                    <TableView>
+                        <template #headers>
+                            <div class="d-flex">
+                                <h4 class="title-table">List Angsuran</h4>
+                                <div class="ms-auto">
+                                    <button
+                                        type="button"
+                                        class="btn btn-primary"
+                                        :disabled="
+                                            props.data.status === 'complete'
+                                        "
+                                        @click="$emit('onToggle')"
+                                    >
+                                        <i class="fas fa-plus me-2"></i>
+                                        Add
+                                    </button>
+                                </div>
+                            </div>
+                        </template>
+                        <template #body>
+                            <table
+                                class="table table-selectable card-table table-vcenter text-nowrap datatable"
+                            >
+                                <thead>
+                                    <tr>
+                                        <th>Code Pinjam</th>
+                                        <th>Nominal Bayar</th>
+                                        <th>Tanggal Bayar</th>
+                                        <th>Sisa Bayar</th>
+                                        <th>Payment type</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        v-for="(item, index) in angsuran"
+                                        :key="index"
+                                    >
+                                        <td>{{ item.pinjaman.code_pinjam }}</td>
+                                        <td>
+                                            Rp. {{ fcurrency(item.nominal) }}
+                                        </td>
+                                        <td>{{ item.do_date }}</td>
+                                        <td>
+                                            Rp. {{ fcurrency(item.sisa_bayar) }}
+                                        </td>
+                                        <td>{{ item.payment_type }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </template>
+                    </TableView>
                 </div>
             </div>
         </div>
