@@ -9,6 +9,7 @@ import _ from "lodash";
 
 const props = defineProps({
     data: Object,
+    total_entries: Number,
 });
 
 const page = usePage();
@@ -249,7 +250,10 @@ function notePinjaman(id) {
                                 </table>
                             </template>
                             <template #footer>
-                                <Pagination :data="data"></Pagination>
+                                <Pagination
+                                    :data="data"
+                                    :total="total_entries"
+                                ></Pagination>
                             </template>
                         </TableView>
                     </div>

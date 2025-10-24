@@ -1,6 +1,7 @@
 <script setup>
 const props = defineProps({
     data: Object,
+    total: Number,
 });
 </script>
 
@@ -10,6 +11,7 @@ const props = defineProps({
             <p class="m-0 text-secondary">
                 Showing
                 <strong>{{ data.from }} to {{ data.to }}</strong>
+                of <strong>{{ total }}</strong> entries
             </p>
         </div>
 

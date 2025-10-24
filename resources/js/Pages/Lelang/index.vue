@@ -10,7 +10,7 @@ import TableView from "../../components/TableView.vue";
 
 const props = defineProps({
     data: Object,
-    total: Number,
+    total_entries: Number,
 });
 
 const title = "Lelang";
@@ -158,7 +158,10 @@ function deLelang(id) {
                                 </table>
                             </template>
                             <template #footer>
-                                <Pagination :data="data"></Pagination>
+                                <Pagination
+                                    :data="data"
+                                    :total="total_entries"
+                                ></Pagination>
                             </template>
                         </TableView>
                     </div>
