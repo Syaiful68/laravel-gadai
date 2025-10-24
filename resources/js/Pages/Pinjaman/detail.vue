@@ -268,7 +268,7 @@ function updatePinjaman() {
                                         :disabled="
                                             props.data.status === 'complete'
                                         "
-                                        @click="$emit('onToggle')"
+                                        @click="toggleModal"
                                     >
                                         <i class="fas fa-plus me-2"></i>
                                         Add
