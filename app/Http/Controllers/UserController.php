@@ -25,7 +25,8 @@ class UserController extends Controller
         }
 
         return Inertia::render('User/index', [
-            'data' => $data->paginate(10)
+            'data' => $data->paginate(10),
+            'total_entries' => User::count()
         ]);
     }
 

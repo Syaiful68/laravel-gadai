@@ -10,6 +10,7 @@ import TableView from "../../components/TableView.vue";
 
 const props = defineProps({
     data: Object,
+    total: Number,
 });
 
 const title = "Lelang";

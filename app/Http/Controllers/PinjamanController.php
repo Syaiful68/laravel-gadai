@@ -29,7 +29,8 @@ class PinjamanController extends Controller
         }
 
         return Inertia::render('Pinjaman/index', [
-            'data' => $data->latest()->simplePaginate(10)
+            'data' => $data->latest()->simplePaginate(10),
+            'total_entries' => Pinjaman::count()
         ]);
     }
 

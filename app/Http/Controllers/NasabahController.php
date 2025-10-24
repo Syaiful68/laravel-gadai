@@ -26,7 +26,8 @@ class NasabahController extends Controller
         }
         // $data = Nasabah::query()->paginate(10);
         return Inertia::render('Nasabah/index', [
-            'data' => $data->latest()->simplePaginate(10)
+            'data' => $data->latest()->simplePaginate(10),
+            'total_entries' => Nasabah::count()
         ]);
     }
 
