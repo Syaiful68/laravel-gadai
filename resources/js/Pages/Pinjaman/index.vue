@@ -249,29 +249,7 @@ function notePinjaman(id) {
                                 </table>
                             </template>
                             <template #footer>
-                                <div
-                                    class="row g-2 justify-content-center justify-content-sm-between"
-                                >
-                                    <div
-                                        class="col-auto d-flex align-items-center"
-                                    >
-                                        <p class="m-0 text-secondary">
-                                            Showing
-                                            <strong
-                                                >{{ data.from }} to
-                                                {{ data.to }}</strong
-                                            >
-                                            of
-                                            <strong
-                                                >{{
-                                                    data.total
-                                                }}
-                                                entries</strong
-                                            >
-                                        </p>
-                                    </div>
-                                    <Pagination :data="data"></Pagination>
-                                </div>
+                                <Pagination :data="data"></Pagination>
                             </template>
                         </TableView>
                     </div>
