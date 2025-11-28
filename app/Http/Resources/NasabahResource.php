@@ -18,6 +18,7 @@ class NasabahResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'status' => $this->status,
+            'pekerjaan' => $this->jobs,
             'gender' => $this->gender,
             'created' => $this->created_at
         ];

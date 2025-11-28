@@ -15,4 +15,8 @@ class Lelang extends Model
     {
         return $this->belongsTo(Pinjaman::class);
     }
+    public function nasabah()
+    {
+        return $this->belongsTo(Nasabah::class);
+    }
 }

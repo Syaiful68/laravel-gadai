@@ -24,10 +24,9 @@ const dataFiltered = computed(() => {
     if (SearchTerm.value !== "") {
         return props.data.data.filter(
             (item) =>
-                item.code_lelang.toLowerCase().includes(SearchTerm.value) ||
-                item.pinjam.code_pinjam
-                    .toLowerCase()
-                    .includes(SearchTerm.value) ||
+                item.code.toLowerCase().includes(SearchTerm.value) ||
+                item.pinjaman.toLowerCase().includes(SearchTerm.value) ||
+                item.nasabah.toLowerCase().includes(SearchTerm.value) ||
                 ""
         );
     }
@@ -105,6 +104,7 @@ function deLelang(id) {
                                         <tr>
                                             <th>Code Lelang</th>
                                             <th>Code Pinjaman</th>
+                                            <th>Nasabah</th>
                                             <th>Nama Lelang</th>
                                             <th>Nominal Pinjaman</th>
                                             <th>Status</th>
@@ -112,8 +112,8 @@ function deLelang(id) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-if="PaginationItems.length < 0">
-                                            <td colspan="5" class="text-center">
+                                        <tr v-if="PaginationItems.length === 0">
+                                            <td colspan="6" class="text-center">
                                                 Data not found
                                             </td>
                                         </tr>
@@ -126,6 +126,9 @@ function deLelang(id) {
                                             <td>{{ item.code }}</td>
                                             <td>
                                                 {{ item.pinjaman }}
+                                            </td>
+                                            <td>
+                                                {{ item.nasabah }}
                                             </td>
                                             <td>{{ item.jaminan }}</td>
                                             <td>

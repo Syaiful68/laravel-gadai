@@ -18,6 +18,7 @@ class LelangResources extends JsonResource
             'code' => $this->code_lelang,
             'pinjaman' => $this->pinjam->code_pinjam,
             'jaminan' => $this->pinjam->jaminan,
+            'nasabah' => $this->nasabah->name,
             'nominal' => $this->nominal,
             'status' => $this->status
         ];

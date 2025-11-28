@@ -2,7 +2,6 @@
 import Layout from "../Layout/app.vue";
 import TableView from "../../components/TableView.vue";
 import HeadersCard from "../../components/HeadersCard.vue";
-import Pagination from "../../components/paginationView.vue";
 import { router, Link } from "@inertiajs/vue3";
 import { ref, computed } from "vue";
 import _ from "lodash";
@@ -41,13 +40,6 @@ function changePage(page) {
         currentPage.value = page;
     }
 }
-
-// watch(
-//     Search,
-//     _.debounce(function (key) {
-//         router.get("/nasabah", { q: key }, { preserveState: true });
-//     }, 1500)
-// );
 
 function editNasabah(id) {
     router.get("/nasabah/" + id);
@@ -130,12 +122,13 @@ function exportData() {
                                         <tr>
                                             <th>Nama</th>
                                             <th>Gender</th>
+                                            <th>Pekerjaan</th>
                                             <th>Status</th>
                                             <th class="w-1"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-if="PaginationItems.length < 0">
+                                        <tr v-if="PaginationItems.length === 0">
                                             <td class="text-center" colspan="4">
                                                 Data not found
                                             </td>
@@ -154,10 +147,9 @@ function exportData() {
                                                 <span v-if="item.gender === 'P'"
                                                     >Wanita</span
                                                 >
-                                                <!-- {{ item.gender }} -->
                                             </td>
+                                            <td>{{ item.pekerjaan }}</td>
                                             <td>
-                                                <!-- {{ item.status }} -->
                                                 <span
                                                     v-if="
                                                         item.status === 'active'
@@ -234,13 +226,6 @@ function exportData() {
                                         </ul>
                                     </div>
                                 </div>
-                                <!-- <Pagination
-                                    :data="data"
-                                    :total="total_entries"
-                                    :current-page="currentPage"
-                                    @prevButton="changePage()"
-                                    @nextButton="changePage()"
-                                ></Pagination> -->
                             </template>
                         </TableView>
                     </div>

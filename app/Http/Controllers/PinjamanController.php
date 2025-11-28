@@ -21,7 +21,7 @@ class PinjamanController extends Controller
     public function index()
     {
         //
-        $data = Pinjaman::with('nasabah')->get();
+        $data = Pinjaman::with(['nasabah'])->get();
         return Inertia::render('Pinjaman/index', [
             'data' => PinjamanResources::collection($data),
             'total_entries' => Pinjaman::count()
@@ -143,6 +143,7 @@ class PinjamanController extends Controller
             Lelang::create([
                 'code_lelang' => $code,
                 'pinjam_id' => $query->id,
+                'nasabah_id' => $query->nasabah_id,
                 'user_id' => Auth::id()
             ]);
 

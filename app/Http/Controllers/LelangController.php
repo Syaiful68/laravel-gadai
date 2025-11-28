@@ -17,19 +17,13 @@ class LelangController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
         //
-        if ($request->q) {
-            $data = Lelang::query()->with('pinjam')->whereAny([
-                'code_lelang'
-            ], 'like', '%' . $request->q . '%');
-        } else {
-            $data = Lelang::query()->with('pinjam');
-        }
+        $data = Lelang::with('pinjam', 'nasabah')->get();
         // $data = Lelang::query()->with('pinjam')->paginate();
         return Inertia::render('Lelang/index', [
-            'data' => LelangResources::collection($data->get()),
+            'data' => LelangResources::collection($data),
             'total_entries' => Lelang::count()
         ]);
     }

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code_lelang');
             $table->unsignedBigInteger('pinjam_id');
+            $table->unsignedBigInteger('nasabah_id');
             $table->integer('nominal')->nullable();
             $table->string('status')->default('incomplete');
             $table->unsignedBigInteger('user_id');
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('pinjam_id')->references('id')->on('tb_pinjaman');
+            $table->foreign('nasabah_id')->references('id')->on('tb_nasabah');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

@@ -15,20 +15,12 @@ class NasabahController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
         //
-        if ($request->q) {
-            $data = Nasabah::query()->whereAny([
-                'name'
-            ], 'like', '%' . $request->q . '%');
-        } else {
-            $data = Nasabah::query();
-        }
-        // $data = Nasabah::query()->paginate(10);
+        $data = Nasabah::all();
         return Inertia::render('Nasabah/index', [
-            'data' => NasabahResource::collection($data->get()),
-            'total_entries' => Nasabah::count()
+            'data' => NasabahResource::collection($data),
         ]);
     }
 
