@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LelangResources extends JsonResource
+class NasabahResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,11 +15,11 @@ class LelangResources extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'code' => $this->code_lelang,
-            'pinjaman' => $this->pinjam->code_pinjam,
-            'jaminan' => $this->pinjam->jaminan,
-            'nominal' => $this->nominal,
-            'status' => $this->status
+            'id' => $this->id,
+            'name' => $this->name,
+            'status' => $this->status,
+            'gender' => $this->gender,
+            'created' => $this->created_at
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\NasabahResource;
 use Carbon\Carbon;
 use Inertia\Inertia;
 use App\Models\Nasabah;
@@ -26,7 +27,7 @@ class NasabahController extends Controller
         }
         // $data = Nasabah::query()->paginate(10);
         return Inertia::render('Nasabah/index', [
-            'data' => $data->latest()->simplePaginate(10),
+            'data' => NasabahResource::collection($data->get()),
             'total_entries' => Nasabah::count()
         ]);
     }

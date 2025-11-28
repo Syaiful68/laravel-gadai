@@ -123,18 +123,14 @@ function deLelang(id) {
                                             ) in PaginationItems"
                                             :key="index"
                                         >
-                                            <td>{{ item.code_lelang }}</td>
+                                            <td>{{ item.code }}</td>
                                             <td>
-                                                {{ item.pinjam.code_pinjam }}
+                                                {{ item.pinjaman }}
                                             </td>
-                                            <td>{{ item.pinjam.jaminan }}</td>
+                                            <td>{{ item.jaminan }}</td>
                                             <td>
                                                 Rp.
-                                                {{
-                                                    fcurrency(
-                                                        item.pinjam.pinjaman
-                                                    )
-                                                }}
+                                                {{ fcurrency(item.nominal) }}
                                             </td>
                                             <td>
                                                 <span
@@ -156,11 +152,7 @@ function deLelang(id) {
                                             </td>
                                             <td>
                                                 <button
-                                                    @click="
-                                                        SoldOut(
-                                                            item.code_lelang
-                                                        )
-                                                    "
+                                                    @click="SoldOut(item.code)"
                                                     type="button"
                                                     class="btn btn-icon me-2"
                                                 >
@@ -169,11 +161,7 @@ function deLelang(id) {
                                                     ></i>
                                                 </button>
                                                 <button
-                                                    @click="
-                                                        deLelang(
-                                                            item.code_lelang
-                                                        )
-                                                    "
+                                                    @click="deLelang(item.code)"
                                                     type="button"
                                                     class="btn btn-icon"
                                                     :disabled="
