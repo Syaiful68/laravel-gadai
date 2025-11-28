@@ -4,7 +4,7 @@ import TableView from "../../components/TableView.vue";
 import HeadersCard from "../../components/HeadersCard.vue";
 import Pagination from "../../components/paginationView.vue";
 import { router, Link } from "@inertiajs/vue3";
-import { ref, watch } from "vue";
+import { ref, computed } from "vue";
 import _ from "lodash";
 
 const props = defineProps({
@@ -13,14 +13,41 @@ const props = defineProps({
 });
 const title = "Nasabah";
 const subtitle = "List Nasabah";
+const SearchTerm = ref("");
+const currentPage = ref(1);
+const perPage = ref(25);
 
-const Search = ref("");
-watch(
-    Search,
-    _.debounce(function (key) {
-        router.get("/nasabah", { q: key }, { preserveState: true });
-    }, 1500)
-);
+const dataFiltered = computed(() => {
+    if (SearchTerm.value !== "") {
+        return props.data.data.filter(
+            (item) => item.name.toLowerCase().includes(SearchTerm.value) || ""
+        );
+    }
+    return props.data.data;
+});
+
+const totalPages = computed(() => {
+    return Math.ceil(dataFiltered.value.length / perPage.value);
+});
+
+const PaginationItems = computed(() => {
+    const start = (currentPage.value - 1) * perPage.value;
+    const end = start + perPage.value;
+    return dataFiltered.value.slice(start, end);
+});
+
+function changePage(page) {
+    if (page >= 1 && page <= totalPages.value) {
+        currentPage.value = page;
+    }
+}
+
+// watch(
+//     Search,
+//     _.debounce(function (key) {
+//         router.get("/nasabah", { q: key }, { preserveState: true });
+//     }, 1500)
+// );
 
 function editNasabah(id) {
     router.get("/nasabah/" + id);
@@ -89,7 +116,7 @@ function exportData() {
                                                 type="text"
                                                 class="form-control form-control-sm"
                                                 aria-label="Search invoice"
-                                                v-model="Search"
+                                                v-model="SearchTerm"
                                             />
                                         </div>
                                     </div>
@@ -108,13 +135,15 @@ function exportData() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-if="data.total === 0">
+                                        <tr v-if="PaginationItems.length < 0">
                                             <td class="text-center" colspan="4">
                                                 Data not found
                                             </td>
                                         </tr>
                                         <tr
-                                            v-for="(item, index) in data.data"
+                                            v-for="(
+                                                item, index
+                                            ) in PaginationItems"
                                             :key="index"
                                         >
                                             <td>{{ item.name }}</td>
@@ -171,10 +200,47 @@ function exportData() {
                                 </table>
                             </template>
                             <template #footer>
-                                <Pagination
+                                <div
+                                    class="row g-2 justify-content-center justify-content-sm-between"
+                                >
+                                    <div
+                                        class="col-auto d-flex align-items-center"
+                                    ></div>
+
+                                    <div class="col-auto">
+                                        <ul class="pagination m-0 ms-auto">
+                                            <button
+                                                type="button"
+                                                class="page-link"
+                                                @click="
+                                                    changePage(currentPage - 1)
+                                                "
+                                                :disabled="currentPage === 1"
+                                            >
+                                                < Prev
+                                            </button>
+                                            <button
+                                                type="button"
+                                                class="page-link"
+                                                @click="
+                                                    changePage(currentPage + 1)
+                                                "
+                                                :disabled="
+                                                    currentPage === totalPages
+                                                "
+                                            >
+                                                Next >
+                                            </button>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- <Pagination
                                     :data="data"
                                     :total="total_entries"
-                                ></Pagination>
+                                    :current-page="currentPage"
+                                    @prevButton="changePage()"
+                                    @nextButton="changePage()"
+                                ></Pagination> -->
                             </template>
                         </TableView>
                     </div>

@@ -18,7 +18,7 @@ const subtitle = "Pinjaman";
 const SearchTerm = ref("");
 const showAction = ref(null);
 const currentPage = ref(1);
-const perPage = ref(2);
+const perPage = ref(25);
 
 const dataFiltered = computed(() => {
     if (SearchTerm.value !== "") {

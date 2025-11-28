@@ -2,7 +2,7 @@
 import { router, usePage } from "@inertiajs/vue3";
 import Layout from "../Layout/app.vue";
 import Headers from "./partials/headers.vue";
-import { ref, watch } from "vue";
+import { ref, computed } from "vue";
 import _ from "lodash";
 // import TableView from "./partials/tableView.vue";
 import Pagination from "../../components/paginationView.vue";
@@ -15,16 +15,42 @@ const props = defineProps({
 
 const title = "Lelang";
 const subtitle = "List Lelang";
-
-const Search = ref("");
 const pages = usePage();
+const SearchTerm = ref("");
+const currentPage = ref(1);
+const perPage = ref(25);
 
-watch(
-    Search,
-    _.debounce(function (key) {
-        router.get("/lelang", { q: key }, { preserveState: true });
-    }, 1500)
-);
+const dataFiltered = computed(() => {
+    if (SearchTerm.value !== "") {
+        return props.data.data.filter(
+            (item) => item.name.toLowerCase().includes(SearchTerm.value) || ""
+        );
+    }
+    return props.data.data;
+});
+
+const totalPages = computed(() => {
+    return Math.ceil(dataFiltered.value.length / perPage.value);
+});
+
+const PaginationItems = computed(() => {
+    const start = (currentPage.value - 1) * perPage.value;
+    const end = start + perPage.value;
+    return dataFiltered.value.slice(start, end);
+});
+
+function changePage(page) {
+    if (page >= 1 && page <= totalPages.value) {
+        currentPage.value = page;
+    }
+}
+
+// watch(
+//     Search,
+//     _.debounce(function (key) {
+//         router.get("/lelang", { q: key }, { preserveState: true });
+//     }, 1500)
+// );
 
 function fcurrency(value) {
     return new Intl.NumberFormat().format(value);
@@ -60,7 +86,7 @@ function deLelang(id) {
                                                 type="text"
                                                 class="form-control form-control-sm"
                                                 aria-label="Search invoice"
-                                                v-model="Search"
+                                                v-model="SearchTerm"
                                             />
                                         </div>
                                     </div>
@@ -81,13 +107,15 @@ function deLelang(id) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-if="data.total === 0">
+                                        <tr v-if="PaginationItems.length < 0">
                                             <td colspan="5" class="text-center">
                                                 Data not found
                                             </td>
                                         </tr>
                                         <tr
-                                            v-for="(item, index) in data.data"
+                                            v-for="(
+                                                item, index
+                                            ) in PaginationItems"
                                             :key="index"
                                         >
                                             <td>{{ item.code_lelang }}</td>
@@ -158,10 +186,41 @@ function deLelang(id) {
                                 </table>
                             </template>
                             <template #footer>
-                                <Pagination
-                                    :data="data"
-                                    :total="total_entries"
-                                ></Pagination>
+                                <div
+                                    class="row g-2 justify-content-center justify-content-sm-between"
+                                >
+                                    <div
+                                        class="col-auto d-flex align-items-center"
+                                    ></div>
+
+                                    <div class="col-auto">
+                                        <ul class="pagination m-0 ms-auto">
+                                            <button
+                                                type="button"
+                                                class="page-link"
+                                                @click="
+                                                    changePage(currentPage - 1)
+                                                "
+                                                :disabled="currentPage === 1"
+                                            >
+                                                < Prev
+                                            </button>
+
+                                            <button
+                                                type="button"
+                                                class="page-link"
+                                                @click="
+                                                    changePage(currentPage + 1)
+                                                "
+                                                :disabled="
+                                                    currentPage === totalPages
+                                                "
+                                            >
+                                                Next >
+                                            </button>
+                                        </ul>
+                                    </div>
+                                </div>
                             </template>
                         </TableView>
                     </div>
