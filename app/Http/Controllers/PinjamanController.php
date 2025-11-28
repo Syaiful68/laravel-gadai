@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PinjamanResources;
 use App\Models\Angsuran;
 use App\Models\Lelang;
 use App\Models\Nasabah;
@@ -17,19 +18,12 @@ class PinjamanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
         //
-        if ($request->search) {
-            $data = Pinjaman::query()->with('nasabah')->whereAny([
-                'code_pinjam'
-            ], 'like', '%' . $request->search . '%');
-        } else {
-            $data = Pinjaman::query()->with('nasabah');
-        }
-
+        $data = Pinjaman::with('nasabah')->get();
         return Inertia::render('Pinjaman/index', [
-            'data' => $data->latest()->simplePaginate(10),
+            'data' => PinjamanResources::collection($data),
             'total_entries' => Pinjaman::count()
         ]);
     }
@@ -139,10 +133,10 @@ class PinjamanController extends Controller
                 'status' => $request->status
             ]);
             $lelang = Lelang::query()->latest()->first();
-            if ($lelang === null) {
-                $last_code = 1;
+            if ($lelang !== null) {
+                $last_code = $lelang->id + 1;
             } else {
-                $last_code = Lelang::count() + 1;
+                $last_code = 1;
             }
             $h = "LMA";
             $code = $h . str_pad($last_code, 6, 0, STR_PAD_LEFT);

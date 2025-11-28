@@ -19,7 +19,10 @@ return new class extends Migration
             $table->date('do_date');
             $table->string('payment_type');
             $table->unsignedBigInteger('user_id');
+            $table->softDeletes('deleted_at')->nullable();
             $table->timestamps();
+
+            $table->foreign('pinjaman_id')->references('tb_pinjaman')->on('id');
         });
     }
 

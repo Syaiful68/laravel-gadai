@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Lelang;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Lelang;
+use App\Models\Pinjaman;
+use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Auth;
+use function Symfony\Component\Clock\now;
 
 class LelangController extends Controller
 {
@@ -91,6 +95,12 @@ class LelangController extends Controller
     {
         //
         $query = Lelang::query()->where('code_lelang', $lelang)->first();
+        // ubah dari lelang jadi angsur di pinjaman table
+        Pinjaman::query()->where('id', $query->pinjam_id)->update([
+            'status' => 'incomplete',
+            'updated_at' => Carbon::now(),
+            'user_id' => Auth::id()
+        ]);
         $query->delete();
     }
 }

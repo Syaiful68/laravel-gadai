@@ -25,7 +25,11 @@ return new class extends Migration
             $table->date('do_date');
             $table->unsignedBigInteger('user_id');
             $table->string('status')->default('incomplete');
+            $table->softDeletes('deleted_at')->nullable();
             $table->timestamps();
+
+            $table->foreign('nasabah_id')->references('id')->on('tb_nasabah');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

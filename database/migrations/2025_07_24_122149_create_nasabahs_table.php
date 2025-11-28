@@ -21,7 +21,11 @@ return new class extends Migration
             $table->string('contact');
             $table->string('jobs');
             $table->string('status')->default('active');
+            $table->unsignedBigInteger('user_id');
+            $table->softDeletes('deleted_at')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

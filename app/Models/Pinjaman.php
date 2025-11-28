@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Pinjaman extends Model
 {
     //
+    use SoftDeletes;
     protected $table = 'tb_pinjaman';
     protected $guarded = ['id'];
 

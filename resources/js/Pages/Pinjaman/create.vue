@@ -1,18 +1,18 @@
 <script setup>
-import { computed, reactive } from "vue";
+import { computed, reactive, ref } from "vue";
 import Layout from "../Layout/app.vue";
 import HeadersCard from "../../components/HeadersCard.vue";
 import { router, usePage, Link } from "@inertiajs/vue3";
 import VueNumberFormat from "vue-number-format";
 import Swal from "sweetalert2";
 
-defineProps({
+const props = defineProps({
     errors: Object,
-    data: Object,
+    data: Array,
 });
 
 const page = usePage();
-const flash = computed(() => page.props.flash.msg);
+const searchNasabah = ref("");
 
 const title = "Pinjaman";
 const subtitle = "New Pinjaman";
@@ -76,6 +76,40 @@ function submitPinjaman() {
                                         <label class="form-label"
                                             >Nasabah</label
                                         >
+                                        <!-- <input
+                                            type="text"
+                                            v-model="searchNasabah"
+                                            @focus="isOpen = true"
+                                            class="form-control"
+                                        /> -->
+                                        <!-- <select
+                                            class="form-select"
+                                            id="select-states"
+                                            value=""
+                                            multiple
+                                        >
+                                            <option value="AL">Alabama</option>
+                                            <option value="AK">Alaska</option>
+                                            <option value="AZ" selected>
+                                                Arizona
+                                            </option>
+                                        </select> -->
+                                        <!-- <ul
+                                            v-if="filterNasabah.length > 0"
+                                            class="dropdown-menu dropdown-menu-demo"
+                                        >
+
+                                            <li
+                                                v-for="(
+                                                    items, index
+                                                ) in filterNasabah"
+                                                :key="index"
+                                                class="dropdown-item"
+                                                @click="selectOption(items.id)"
+                                            >
+                                                {{ items.nasabah }}
+                                            </li>
+                                        </ul> -->
                                         <select
                                             class="form-control"
                                             v-model="formData.nasabah"

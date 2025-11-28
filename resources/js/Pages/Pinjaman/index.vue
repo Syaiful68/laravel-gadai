@@ -3,8 +3,7 @@ import Layout from "../Layout/app.vue";
 import HeadersCard from "../../components/HeadersCard.vue";
 import TableView from "../../components/TableView.vue";
 import { router, usePage, Link } from "@inertiajs/vue3";
-import { computed, watch, ref } from "vue";
-import Pagination from "../../components/paginationView.vue";
+import { computed, ref } from "vue";
 import _ from "lodash";
 
 const props = defineProps({
@@ -14,19 +13,42 @@ const props = defineProps({
 
 const page = usePage();
 const flash = computed(() => page.props.flash.msg);
-
 const title = "Pinjaman";
 const subtitle = "Pinjaman";
-
 const SearchTerm = ref("");
 const showAction = ref(null);
+const currentPage = ref(1);
+const perPage = ref(2);
 
-watch(
-    SearchTerm,
-    _.debounce(function (key) {
-        router.get("/pinjaman", { search: key }, { preserveState: true });
-    }, 1500)
-);
+const dataFiltered = computed(() => {
+    if (SearchTerm.value !== "") {
+        return props.data.data.filter(
+            (item) =>
+                item.nasabah.toLowerCase().includes(SearchTerm.value) ||
+                item.nasabah.toUpperCase().includes(SearchTerm.value) ||
+                item.code_pinjam.toLowerCase().includes(SearchTerm.value) ||
+                item.code_pinjam.toUpperCase().includes(SearchTerm.value) ||
+                ""
+        );
+    }
+    return props.data.data;
+});
+
+const totalPages = computed(() => {
+    return Math.ceil(dataFiltered.value.length / perPage.value);
+});
+
+const PaginationItems = computed(() => {
+    const start = (currentPage.value - 1) * perPage.value;
+    const end = start + perPage.value;
+    return dataFiltered.value.slice(start, end);
+});
+
+function changePage(page) {
+    if (page >= 1 && page <= totalPages.value) {
+        currentPage.value = page;
+    }
+}
 
 function toggleAction(id) {
     if (showAction.value === id) {
@@ -120,17 +142,19 @@ function notePinjaman(id) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-if="data.total === 0">
+                                        <tr v-if="PaginationItems.length === 0">
                                             <td class="text-center" colspan="6">
                                                 Data not Found
                                             </td>
                                         </tr>
                                         <tr
-                                            v-for="(item, index) in data.data"
+                                            v-for="(
+                                                item, index
+                                            ) in PaginationItems"
                                             :key="index"
                                         >
                                             <td>{{ item.code_pinjam }}</td>
-                                            <td>{{ item.nasabah.name }}</td>
+                                            <td>{{ item.nasabah }}</td>
                                             <td>
                                                 Rp.
                                                 {{ fcurrency(item.pinjaman) }}
@@ -250,10 +274,74 @@ function notePinjaman(id) {
                                 </table>
                             </template>
                             <template #footer>
-                                <Pagination
+                                <div
+                                    class="row g-2 justify-content-center justify-content-sm-between"
+                                >
+                                    <div
+                                        class="col-auto d-flex align-items-center"
+                                    ></div>
+
+                                    <div class="col-auto">
+                                        <ul class="pagination m-0 ms-auto">
+                                            <button
+                                                type="button"
+                                                class="page-link"
+                                                @click="
+                                                    changePage(currentPage - 1)
+                                                "
+                                                :disabled="currentPage === 1"
+                                            >
+                                                < Prev
+                                            </button>
+                                            <!-- <li class="page-item">
+                                                <a
+                                                    class="page-link"
+                                                    href="#"
+                                                    @click="
+                                                        changePage(
+                                                            currentPage - 1
+                                                        )
+                                                    "
+                                                    >< Prev</a
+                                                >
+                                            </li> -->
+                                            <button
+                                                type="button"
+                                                class="page-link"
+                                                @click="
+                                                    changePage(currentPage + 1)
+                                                "
+                                                :disabled="
+                                                    currentPage === totalPages
+                                                "
+                                            >
+                                                Next >
+                                            </button>
+                                            <!-- <li
+                                                class="page-item"
+                                                v-if="page !== totalPages"
+                                            >
+                                            <a
+                                                    class="page-link"
+                                                    href="#"
+                                                    @click="
+                                                        changePage(
+                                                            currentPage + 1
+                                                        )
+                                                    "
+                                                    >Next ></a
+                                                >
+                                            </li> -->
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- <Pagination
                                     :data="data"
                                     :total="total_entries"
-                                ></Pagination>
+                                    :current-page="currentPage"
+                                    @prevButton="changePage()"
+                                    @nextButton="changePage()"
+                                ></Pagination> -->
                             </template>
                         </TableView>
                     </div>

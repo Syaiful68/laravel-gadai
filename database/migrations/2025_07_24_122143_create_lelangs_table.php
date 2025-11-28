@@ -17,8 +17,12 @@ return new class extends Migration
             $table->unsignedBigInteger('pinjam_id');
             $table->integer('nominal')->nullable();
             $table->string('status')->default('incomplete');
-            $table->string('user_id');
+            $table->unsignedBigInteger('user_id');
+            $table->softDeletes('deleted_at')->nullable();
             $table->timestamps();
+
+            $table->foreign('pinjam_id')->references('id')->on('tb_pinjaman');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
