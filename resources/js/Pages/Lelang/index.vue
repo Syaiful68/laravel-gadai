@@ -23,7 +23,12 @@ const perPage = ref(25);
 const dataFiltered = computed(() => {
     if (SearchTerm.value !== "") {
         return props.data.data.filter(
-            (item) => item.name.toLowerCase().includes(SearchTerm.value) || ""
+            (item) =>
+                item.code_lelang.toLowerCase().includes(SearchTerm.value) ||
+                item.pinjam.code_pinjam
+                    .toLowerCase()
+                    .includes(SearchTerm.value) ||
+                ""
         );
     }
     return props.data.data;
