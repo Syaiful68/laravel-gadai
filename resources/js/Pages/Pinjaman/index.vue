@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { router, usePage, Link } from "@inertiajs/vue3";
 import { computed, ref } from "vue";
 import _ from "lodash";
+import moment from "moment";
 
 const props = defineProps({
     data: Object,
@@ -61,6 +62,10 @@ function toggleAction(id) {
 
 function fcurrency(value) {
     return new Intl.NumberFormat().format(value);
+}
+
+function formatDate(value) {
+    return moment(value).format("DD-MM-YYYY");
 }
 
 function deletePinjam(id) {
@@ -234,12 +239,15 @@ function notePinjaman(id) {
                                                         <a
                                                             :href="
                                                                 'http://api.whatsapp.com/send?phone=+62' +
-                                                                item.nasabah
-                                                                    .contact +
+                                                                item.contact +
                                                                 '&text=mohon untuk segera membayarkan uang angsuran sebesar Rp. ' +
-                                                                item.pinjaman +
+                                                                fcurrency(
+                                                                    item.pinjaman
+                                                                ) +
                                                                 '%20 sebelum tanggal ' +
-                                                                item.term_date
+                                                                formatDate(
+                                                                    item.term
+                                                                )
                                                             "
                                                             target="_blank"
                                                             class="dropdown-item"

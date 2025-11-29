@@ -17,7 +17,9 @@ class PinjamanResources extends JsonResource
         return [
             'code_pinjam' => $this->code_pinjam,
             'nasabah' => $this->nasabah->name,
+            'contact' => $this->nasabah->contact,
             'pinjaman' => $this->pinjaman,
+            'term' => $this->term_date,
             'persentages' => $this->persentages,
             'status' => $this->status
         ];
