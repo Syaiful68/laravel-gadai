@@ -222,14 +222,12 @@ function updatePinjaman() {
                                             :class="{
                                                 'is-invalid': errors.status,
                                             }"
+                                            :disabled="
+                                                statusPinjam !== 'incomplete'
+                                            "
                                         >
                                             <option value="">Choise</option>
-                                            <option
-                                                value="complete"
-                                                v-if="
-                                                    statusPinjam === 'complete'
-                                                "
-                                            >
+                                            <option value="complete">
                                                 Complete
                                             </option>
                                             <option value="incomplete">
@@ -241,13 +239,13 @@ function updatePinjaman() {
                                         </select>
                                     </div>
                                 </div>
-                                <div class="card-footer">
+                                <div
+                                    class="card-footer"
+                                    v-if="props.data.status === 'incomplete'"
+                                >
                                     <button
                                         type="submit"
                                         class="btn btn-primary"
-                                        :disabled="
-                                            props.data.status === 'complete'
-                                        "
                                     >
                                         Submit
                                     </button>

@@ -286,8 +286,8 @@ function notePinjaman(id) {
                                                             type="button"
                                                             class="dropdown-item"
                                                             :disabled="
-                                                                item.status ===
-                                                                'complete'
+                                                                item.status !==
+                                                                'incomplete'
                                                             "
                                                         >
                                                             Delete
