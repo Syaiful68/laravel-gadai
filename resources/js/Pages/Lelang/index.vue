@@ -3,9 +3,8 @@ import { router, usePage } from "@inertiajs/vue3";
 import Layout from "../Layout/app.vue";
 import Headers from "./partials/headers.vue";
 import { ref, computed } from "vue";
+import Swal from "sweetalert2";
 import _ from "lodash";
-// import TableView from "./partials/tableView.vue";
-import Pagination from "../../components/paginationView.vue";
 import TableView from "../../components/TableView.vue";
 
 const props = defineProps({
@@ -66,8 +65,28 @@ function SoldOut(id) {
     });
 }
 function deLelang(id) {
-    router.delete("/lelang/" + id, {
-        _token: pages.props.csrf_token,
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You're delete it!!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            router.delete("/lelang/" + id, {
+                _token: pages.props.csrf_token,
+                onSuccess: () => {
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success",
+                    });
+                    window.location.reload();
+                },
+            });
+        }
     });
 }
 </script>

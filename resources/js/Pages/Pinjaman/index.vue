@@ -2,6 +2,7 @@
 import Layout from "../Layout/app.vue";
 import HeadersCard from "../../components/HeadersCard.vue";
 import TableView from "../../components/TableView.vue";
+import Swal from "sweetalert2";
 import { router, usePage, Link } from "@inertiajs/vue3";
 import { computed, ref } from "vue";
 import _ from "lodash";
@@ -63,10 +64,27 @@ function fcurrency(value) {
 }
 
 function deletePinjam(id) {
-    router.delete("/pinjaman/" + id, {
-        onSuccess: () => {
-            window.location.reload();
-        },
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You'a delete it ",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            router.delete("/pinjaman/" + id, {
+                onSuccess: () => {
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success",
+                    });
+                    window.location.reload();
+                },
+            });
+        }
     });
 }
 function notePinjaman(id) {

@@ -2,6 +2,7 @@
 import Layout from "../Layout/app.vue";
 import TableView from "../../components/TableView.vue";
 import HeadersCard from "../../components/HeadersCard.vue";
+import Swal from "sweetalert2";
 import { router, Link } from "@inertiajs/vue3";
 import { ref, computed } from "vue";
 import _ from "lodash";
